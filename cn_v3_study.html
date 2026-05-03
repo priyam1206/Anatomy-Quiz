@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CN V3 — Mandibular Nerve</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --border: #e0ddd6;
+    --border-dark: #c8c4bb;
+    --text: #1a1916;
+    --muted: #8a8780;
+    --accent: #2d4a3e;
+    --accent-light: #e8f0ec;
+    --accent2: #8b3a2a;
+    --accent2-light: #f5ece9;
+    --accent3: #2a3d8b;
+    --accent3-light: #eaecf5;
+    --yellow: #e8c547;
+    --yellow-light: #fdf8e3;
+    --radius: 6px;
+    --radius-lg: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.85rem 1rem 0.85rem 0;
+    border-right: 1px solid var(--border);
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .nav-btn {
+    padding: 0.85rem 0.9rem;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .nav-btn:hover { color: var(--text); }
+  .nav-btn.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 500; }
+
+  /* ── PANELS ── */
+  .panel { display: none; padding: 1.25rem 1rem 3rem; max-width: 600px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  /* ── SECTION HEADER ── */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  /* ════════════════════════════════
+     FLASHCARDS
+  ════════════════════════════════ */
+  .filter-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .filter-btn {
+    padding: 5px 12px;
+    border-radius: 99px;
+    border: 1px solid var(--border-dark);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .filter-btn.on {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .card-counter {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 0.75rem;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .card-area {
+    perspective: 900px;
+    width: 100%;
+    height: 210px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .fc {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease;
+  }
+  .fc.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+  .fc-face.back {
+    transform: rotateY(180deg);
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+  .fc-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .fc-face.back .fc-tag { color: var(--accent); }
+  .fc-q { font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text); }
+  .fc-a { font-size: 14px; line-height: 1.5; color: var(--accent); font-weight: 400; }
+  .fc-hint { font-size: 11px; color: var(--muted); margin-top: 0.6rem; }
+
+  .fc-nav { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .fc-nav button {
+    padding: 10px;
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .fc-nav button:active { background: var(--accent-light); }
+
+  /* ════════════════════════════════
+     MIND MAP
+  ════════════════════════════════ */
+  .mindmap-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    padding: 0;
+  }
+  #mindmap-svg {
+    display: block;
+    min-width: 720px;
+  }
+
+  /* ════════════════════════════════
+     FILL IN THE BLANK
+  ════════════════════════════════ */
+  .diagram-wrap {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+  .diagram-img {
+    width: 100%;
+    display: block;
+  }
+
+  .score-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .score-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 99px;
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+  .progress-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 0.75rem;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.3s;
+    width: 0%;
+  }
+
+  .fitb-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .fitb-prompt {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .fitb-q {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+  .blank {
+    display: inline-block;
+    border-bottom: 2px solid var(--accent);
+    min-width: 120px;
+    padding: 0 4px;
+    font-weight: 500;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .opt-btn {
+    padding: 10px 8px;
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.3;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .opt-btn:active { transform: scale(0.97); }
+  .opt-btn.correct { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 500; }
+  .opt-btn.wrong { background: var(--accent2-light); border-color: var(--accent2); color: var(--accent2); }
+  .opt-btn.reveal { background: var(--yellow-light); border-color: var(--yellow); color: #7a6520; }
+  .opt-btn:disabled { cursor: default; }
+
+  .fitb-feedback {
+    margin-top: 0.75rem;
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    display: none;
+  }
+  .fitb-feedback.show { display: block; }
+  .fitb-feedback.ok { background: var(--accent-light); color: var(--accent); }
+  .fitb-feedback.bad { background: var(--accent2-light); color: var(--accent2); }
+
+  .fitb-nav {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+  }
+  .fitb-nav button {
+    flex: 1;
+    padding: 11px;
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+  }
+  .fitb-nav button.primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .fitb-nav button:disabled { opacity: 0.4; cursor: default; }
+
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1rem;
+    text-align: center;
+    display: none;
+  }
+  .result-card.show { display: block; }
+  .result-score-big {
+    font-family: 'DM Mono', monospace;
+    font-size: 48px;
+    font-weight: 500;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .result-label { font-size: 14px; color: var(--muted); margin-bottom: 1.5rem; }
+  .restart-btn {
+    padding: 11px 24px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+  }
+
+  /* ════════════════════════════════
+     QUICK REFERENCE
+  ════════════════════════════════ */
+  .ref-section { margin-bottom: 1.5rem; }
+  .ref-heading {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .ref-row {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--bg);
+    align-items: flex-start;
+  }
+  .ref-key {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    min-width: 100px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .ref-val { font-size: 13px; color: var(--text); line-height: 1.5; }
+  .tag-chip {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin: 2px 2px 2px 0;
+    font-family: 'DM Mono', monospace;
+  }
+  .tag-motor { background: var(--accent-light); color: var(--accent); }
+  .tag-sensory { background: var(--accent3-light); color: var(--accent3); }
+  .tag-auto { background: var(--yellow-light); color: #7a6520; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">CN V3</div>
+  <button class="nav-btn active" onclick="show('fc')">Flashcards</button>
+  <button class="nav-btn" onclick="show('mm')">Mind Map</button>
+  <button class="nav-btn" onclick="show('fitb')">Diagram Quiz</button>
+  <button class="nav-btn" onclick="show('ref')">Reference</button>
+</nav>
+
+<!-- ════════ FLASHCARDS ════════ -->
+<div id="panel-fc" class="panel active">
+  <p class="section-label">Flashcards · tap card to flip</p>
+  <div class="filter-row" id="fc-cats"></div>
+  <div class="card-counter" id="fc-prog"></div>
+  <div class="card-area" onclick="fcFlip()">
+    <div class="fc" id="fc-card">
+      <div class="fc-face front">
+        <div class="fc-tag" id="fc-qtag"></div>
+        <div class="fc-q" id="fc-qtext"></div>
+        <div class="fc-hint">tap to reveal answer</div>
+      </div>
+      <div class="fc-face back">
+        <div class="fc-tag">Answer</div>
+        <div class="fc-a" id="fc-atext"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button onclick="fcPrev()">← Prev</button>
+    <button onclick="fcShuffle()">Shuffle</button>
+    <button onclick="fcNext()">Next →</button>
+  </div>
+</div>
+
+<!-- ════════ MIND MAP ════════ -->
+<div id="panel-mm" class="panel">
+  <p class="section-label">Mind Map · scroll sideways if needed</p>
+  <div class="mindmap-wrap">
+    <svg id="mindmap-svg" viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg" style="font-family:'DM Sans',sans-serif;">
+
+      <!-- Background -->
+      <rect width="900" height="660" fill="#ffffff"/>
+
+      <!-- ── CONNECTOR LINES ── -->
+      <!-- Root to origin/type/pathway -->
+      <line x1="320" y1="330" x2="200" y2="165" stroke="#c8c4bb" stroke-width="1.2"/>
+      <line x1="320" y1="330" x2="200" y2="245" stroke="#c8c4bb" stroke-width="1.2"/>
+      <line x1="320" y1="330" x2="200" y2="330" stroke="#c8c4bb" stroke-width="1.2"/>
+
+      <!-- Root to Direct branches -->
+      <line x1="450" y1="330" x2="570" y2="200" stroke="#c8c4bb" stroke-width="1.2"/>
+      <line x1="450" y1="330" x2="570" y2="270" stroke="#c8c4bb" stroke-width="1.2"/>
+
+      <!-- Root to Anterior -->
+      <line x1="400" y1="355" x2="400" y2="430" stroke="#c8c4bb" stroke-width="1.2"/>
+
+      <!-- Root to Posterior -->
+      <line x1="430" y1="360" x2="650" y2="430" stroke="#c8c4bb" stroke-width="1.2"/>
+
+      <!-- Anterior sub-branches -->
+      <line x1="300" y1="470" x2="170" y2="520" stroke="#c8c4bb" stroke-width="1"/>
+      <line x1="300" y1="470" x2="260" y2="530" stroke="#c8c4bb" stroke-width="1"/>
+      <line x1="300" y1="470" x2="350" y2="530" stroke="#c8c4bb" stroke-width="1"/>
+      <line x1="300" y1="470" x2="430" y2="520" stroke="#c8c4bb" stroke-width="1"/>
+
+      <!-- Posterior sub-branches -->
+      <line x1="660" y1="470" x2="560" y2="530" stroke="#c8c4bb" stroke-width="1"/>
+      <line x1="660" y1="470" x2="660" y2="530" stroke="#c8c4bb" stroke-width="1"/>
+      <line x1="660" y1="470" x2="780" y2="530" stroke="#c8c4bb" stroke-width="1"/>
+
+      <!-- Inferior alveolar sub -->
+      <line x1="780" y1="560" x2="780" y2="600" stroke="#c8c4bb" stroke-width="1"/>
+      <line x1="780" y1="560" x2="840" y2="600" stroke="#c8c4bb" stroke-width="1"/>
+
+      <!-- ── ROOT NODE ── -->
+      <rect x="320" y="300" width="130" height="60" rx="8" fill="#2d4a3e"/>
+      <text x="385" y="325" font-size="13" font-weight="500" fill="#ffffff" text-anchor="middle">Mandibular</text>
+      <text x="385" y="342" font-size="13" font-weight="500" fill="#ffffff" text-anchor="middle">Nerve (CN V3)</text>
+      <text x="385" y="357" font-size="10" fill="#9fd4be" text-anchor="middle">Mixed nerve</text>
+
+      <!-- ── LEFT CLUSTER: Overview ── -->
+      <!-- Origin -->
+      <rect x="70" y="140" width="135" height="48" rx="6" fill="#eaecf5" stroke="#b0b8e0" stroke-width="0.8"/>
+      <text x="137" y="159" font-size="10" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">ORIGIN</text>
+      <text x="137" y="176" font-size="12" font-weight="500" fill="#2a3d8b" text-anchor="middle">Trigeminal ganglion</text>
+
+      <!-- Type -->
+      <rect x="70" y="220" width="135" height="46" rx="6" fill="#eaecf5" stroke="#b0b8e0" stroke-width="0.8"/>
+      <text x="137" y="239" font-size="10" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">TYPE</text>
+      <text x="137" y="254" font-size="12" font-weight="500" fill="#2a3d8b" text-anchor="middle">Motor + Sensory</text>
+      <text x="137" y="268" font-size="10" fill="#666c99" text-anchor="middle">+ Autonomic</text>
+
+      <!-- Pathway -->
+      <rect x="70" y="305" width="135" height="50" rx="6" fill="#eaecf5" stroke="#b0b8e0" stroke-width="0.8"/>
+      <text x="137" y="323" font-size="10" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">PATHWAY</text>
+      <text x="137" y="339" font-size="11" font-weight="500" fill="#2a3d8b" text-anchor="middle">Trigeminal ganglion</text>
+      <text x="137" y="353" font-size="11" fill="#2a3d8b" text-anchor="middle">→ Foramen ovale</text>
+
+      <!-- ── DIRECT BRANCHES (top right) ── -->
+      <rect x="490" y="172" width="175" height="50" rx="6" fill="#f5ece9" stroke="#d8957a" stroke-width="0.8"/>
+      <text x="577" y="191" font-size="10" fill="#9c4a35" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">MENINGEAL BRANCH</text>
+      <text x="577" y="206" font-size="12" font-weight="500" fill="#8b3a2a" text-anchor="middle">= Nervus spinosus</text>
+      <text x="577" y="220" font-size="10" fill="#9c4a35" text-anchor="middle">re-enters via foramen spinosum</text>
+
+      <rect x="490" y="244" width="175" height="46" rx="6" fill="#f5ece9" stroke="#d8957a" stroke-width="0.8"/>
+      <text x="577" y="263" font-size="10" fill="#9c4a35" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">NERVE TO MED. PTERYGOID</text>
+      <text x="577" y="278" font-size="11" font-weight="500" fill="#8b3a2a" text-anchor="middle">→ Tensor tympani</text>
+      <text x="577" y="292" font-size="11" fill="#8b3a2a" text-anchor="middle">→ Tensor veli palatini</text>
+
+      <!-- ── ANTERIOR DIVISION ── -->
+      <rect x="235" y="430" width="130" height="42" rx="6" fill="#e8f0ec" stroke="#6aaa87" stroke-width="0.8"/>
+      <text x="300" y="448" font-size="10" fill="#3a7a5a" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">ANTERIOR DIV.</text>
+      <text x="300" y="464" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">mostly motor</text>
+
+      <!-- Anterior sub-nodes -->
+      <rect x="100" y="510" width="120" height="36" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
+      <text x="160" y="526" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Buccal nerve</text>
+      <text x="160" y="540" font-size="10" fill="#8a8780" text-anchor="middle">cheek · sensory</text>
+
+      <rect x="195" y="518" width="100" height="32" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
+      <text x="245" y="533" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Masseteric</text>
+      <text x="245" y="546" font-size="10" fill="#8a8780" text-anchor="middle">masseter · TMJ</text>
+
+      <rect x="305" y="518" width="100" height="32" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
+      <text x="355" y="533" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Deep temporal</text>
+      <text x="355" y="546" font-size="10" fill="#8a8780" text-anchor="middle">temporalis</text>
+
+      <rect x="408" y="510" width="100" height="36" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
+      <text x="458" y="525" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">N. to lateral</text>
+      <text x="458" y="539" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">pterygoid</text>
+
+      <!-- ── POSTERIOR DIVISION ── -->
+      <rect x="592" y="430" width="130" height="42" rx="6" fill="#e8f0ec" stroke="#6aaa87" stroke-width="0.8"/>
+      <text x="657" y="448" font-size="10" fill="#3a7a5a" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">POSTERIOR DIV.</text>
+      <text x="657" y="464" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">mostly sensory</text>
+
+      <!-- Posterior sub-nodes -->
+      <rect x="490" y="520" width="130" height="42" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
+      <text x="555" y="537" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Auriculotemporal</text>
+      <text x="555" y="551" font-size="10" fill="#8a8780" text-anchor="middle">parotid · ear · temple</text>
+
+      <rect x="625" y="520" width="80" height="42" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
+      <text x="665" y="537" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Lingual</text>
+      <text x="665" y="551" font-size="10" fill="#8a8780" text-anchor="middle">ant. ⅔ tongue</text>
+
+      <rect x="712" y="520" width="120" height="42" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
+      <text x="772" y="537" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Inferior alveolar</text>
+      <text x="772" y="551" font-size="10" fill="#8a8780" text-anchor="middle">mandibular canal</text>
+
+      <!-- Inferior alveolar sub -->
+      <rect x="710" y="588" width="80" height="32" rx="5" fill="#fdf8e3" stroke="#e8c547" stroke-width="0.8"/>
+      <text x="750" y="602" font-size="10" font-weight="500" fill="#7a6520" text-anchor="middle">N. to mylohyoid</text>
+      <text x="750" y="614" font-size="9" fill="#9a8030" text-anchor="middle">+ ant. digastric</text>
+
+      <rect x="800" y="588" width="75" height="32" rx="5" fill="#fdf8e3" stroke="#e8c547" stroke-width="0.8"/>
+      <text x="837" y="604" font-size="11" font-weight="500" fill="#7a6520" text-anchor="middle">Mental nerve</text>
+      <text x="837" y="617" font-size="9" fill="#9a8030" text-anchor="middle">lower lip</text>
+
+      <!-- Legend -->
+      <rect x="20" y="600" width="10" height="10" rx="2" fill="#2d4a3e"/>
+      <text x="36" y="610" font-size="10" fill="#8a8780">Root</text>
+      <rect x="75" y="600" width="10" height="10" rx="2" fill="#e8f0ec" stroke="#6aaa87" stroke-width="0.8"/>
+      <text x="91" y="610" font-size="10" fill="#8a8780">Division</text>
+      <rect x="145" y="600" width="10" height="10" rx="2" fill="#f5ece9" stroke="#d8957a" stroke-width="0.8"/>
+      <text x="161" y="610" font-size="10" fill="#8a8780">Direct branch</text>
+      <rect x="245" y="600" width="10" height="10" rx="2" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
+      <text x="261" y="610" font-size="10" fill="#8a8780">Terminal branch</text>
+
+    </svg>
+  </div>
+</div>
+
+<!-- ════════ FILL IN THE BLANK ════════ -->
+<div id="panel-fitb" class="panel">
+  <p class="section-label">Diagram Quiz · identify the labelled structures</p>
+
+  <div class="diagram-wrap">
+    <img src="1777778393572_image.png" class="diagram-img" alt="CN V3 labelled diagram" onerror="this.style.display='none'; document.getElementById('img-fallback').style.display='block'"/>
+    <div id="img-fallback" style="display:none; padding:1rem; text-align:center; color:var(--muted); font-size:13px;">
+      (Refer to the CN V3 diagram from your textbook while answering)
+    </div>
+  </div>
+
+  <div class="score-bar">
+    <span class="score-pill" id="fitb-score">0 / 20</span>
+    <div class="progress-track"><div class="progress-fill" id="fitb-prog"></div></div>
+    <span style="font-family:'DM Mono',monospace; font-size:12px; color:var(--muted);" id="fitb-qnum">Q1</span>
+  </div>
+
+  <div id="fitb-game"></div>
+  <div class="result-card" id="fitb-result">
+    <div class="result-score-big" id="result-num"></div>
+    <div class="result-label" id="result-msg"></div>
+    <button class="restart-btn" onclick="fitbRestart()">Try Again</button>
+  </div>
+</div>
+
+<!-- ════════ QUICK REFERENCE ════════ -->
+<div id="panel-ref" class="panel">
+  <p class="section-label">Quick Reference</p>
+
+  <div class="ref-section">
+    <div class="ref-heading">Overview</div>
+    <div class="ref-row"><div class="ref-key">Type</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span><span class="tag-chip tag-sensory">Sensory</span><span class="tag-chip tag-auto">Autonomic</span></div></div>
+    <div class="ref-row"><div class="ref-key">Origin</div><div class="ref-val">Trigeminal ganglion of Gasser (sensory) + Motor nucleus of CN V (motor)</div></div>
+    <div class="ref-row"><div class="ref-key">Exit skull</div><div class="ref-val">Foramen ovale → infratemporal fossa</div></div>
+    <div class="ref-row"><div class="ref-key">Divisions</div><div class="ref-val">Anterior (smaller, mostly motor) · Posterior (larger, mostly sensory)</div></div>
+    <div class="ref-row"><div class="ref-key">Sensory area</div><div class="ref-val">Lower ⅓ face, lower lip, mandible, preauricular/temporal skin, anterior ⅔ tongue, cheek, dura of middle cranial fossa</div></div>
+    <div class="ref-row"><div class="ref-key">Motor muscles</div><div class="ref-val">Masticatory muscles, mylohyoid, anterior belly of digastric, tensor tympani, tensor veli palatini</div></div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-heading">Direct branches (pre-bifurcation)</div>
+    <div class="ref-row"><div class="ref-key">Meningeal branch</div><div class="ref-val">= Nervus spinosus · re-enters skull via foramen spinosum · innervates dura mater of middle cranial fossa (follows middle meningeal artery)</div></div>
+    <div class="ref-row"><div class="ref-key">N. to med. pterygoid</div><div class="ref-val">Innervates medial pterygoid, tensor tympani, tensor veli palatini</div></div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-heading">Anterior division</div>
+    <div class="ref-row"><div class="ref-key">Buccal nerve</div><div class="ref-val"><span class="tag-chip tag-sensory">Sensory</span> Skin of cheek + buccal mucosa · anastomoses with CN VII buccal branches</div></div>
+    <div class="ref-row"><div class="ref-key">Masseteric nerve</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span> Masseter + TMJ branch</div></div>
+    <div class="ref-row"><div class="ref-key">Deep temporal nn.</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span> Anterior + posterior branches → temporalis muscle</div></div>
+    <div class="ref-row"><div class="ref-key">N. to lat. pterygoid</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span> Lateral pterygoid muscle</div></div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-heading">Posterior division</div>
+    <div class="ref-row"><div class="ref-key">Auriculotemporal n.</div><div class="ref-val">Two roots encircle middle meningeal artery · parasympathetic from CN IX via otic ganglion to parotid · supplies tragus, EAM, tympanic membrane, temporal skin</div></div>
+    <div class="ref-row"><div class="ref-key">Lingual nerve</div><div class="ref-val"><span class="tag-chip tag-sensory">Sensory</span> Joins chorda tympani (CN VII) · anterior ⅔ tongue, floor of mouth, mandibular gingiva</div></div>
+    <div class="ref-row"><div class="ref-key">Inferior alveolar n.</div><div class="ref-val">Enters mandibular foramen → mandibular canal → terminal branch = mental nerve (lower lip via mental foramen) · gives off N. to mylohyoid + ant. belly of digastric</div></div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-heading">Key associations to memorise</div>
+    <div class="ref-row"><div class="ref-key">Nervus spinosus</div><div class="ref-val">= meningeal branch · spinosum = foramen it re-enters</div></div>
+    <div class="ref-row"><div class="ref-key">Otic ganglion</div><div class="ref-val">Relay for parasympathetic fibers (CN IX → parotid gland via auriculotemporal)</div></div>
+    <div class="ref-row"><div class="ref-key">Chorda tympani</div><div class="ref-val">CN VII branch that joins lingual nerve · carries taste + parasympathetic to submandibular/sublingual glands</div></div>
+    <div class="ref-row"><div class="ref-key">Mental nerve</div><div class="ref-val">Terminal branch of inferior alveolar → exits mental foramen → lower lip</div></div>
+    <div class="ref-row"><div class="ref-key">1st pharyngeal arch</div><div class="ref-val">All muscles motor-innervated by CN V3 derive from it</div></div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════
+   FLASHCARDS DATA
+══════════════════════════════════════ */
+const FC_DATA = [
+  {q:"What type of nerve is CN V3?", a:"Mixed nerve — motor, sensory and autonomic fibers.", cat:"Overview"},
+  {q:"Where does the sensory root of CN V3 originate?", a:"Trigeminal ganglion of Gasser", cat:"Overview"},
+  {q:"Where does the motor root of CN V3 originate?", a:"Motor nucleus of the trigeminal nerve (CN V)", cat:"Overview"},
+  {q:"Through which foramen does CN V3 exit the skull?", a:"Foramen ovale", cat:"Overview"},
+  {q:"What region does CN V3 enter after the skull?", a:"Infratemporal fossa", cat:"Overview"},
+  {q:"What are the two main divisions of CN V3?", a:"Anterior division (smaller, mostly motor) and posterior division (larger, mostly sensory)", cat:"Overview"},
+  {q:"What is the sensory territory of CN V3?", a:"Lower ⅓ of face, lower lip, mandible, preauricular/temporal areas, anterior ⅔ of tongue, cheek, dura of middle cranial fossa", cat:"Overview"},
+  {q:"Which muscles does CN V3 motor fibers supply?", a:"Masticatory muscles (masseter, temporalis, pterygoids), mylohyoid, anterior belly of digastric, tensor tympani, tensor veli palatini", cat:"Overview"},
+  {q:"All muscles supplied by CN V3 originate from which pharyngeal arch?", a:"First pharyngeal arch", cat:"Overview"},
+  {q:"What is the meningeal branch of CN V3 also called?", a:"Nervus spinosus", cat:"Direct branches"},
+  {q:"Through which foramen does the meningeal branch re-enter the skull?", a:"Foramen spinosum", cat:"Direct branches"},
+  {q:"What artery does the meningeal branch accompany inside the skull?", a:"Middle meningeal artery", cat:"Direct branches"},
+  {q:"What does the meningeal branch innervate?", a:"Dura mater of the middle cranial fossa", cat:"Direct branches"},
+  {q:"When does the nerve to medial pterygoid branch off CN V3?", a:"After the meningeal branch, prior to bifurcation into anterior/posterior divisions", cat:"Direct branches"},
+  {q:"Besides medial pterygoid, what does the nerve to medial pterygoid also innervate?", a:"Tensor tympani and tensor veli palatini", cat:"Direct branches"},
+  {q:"How many branches does the anterior division give off? Name them.", a:"Four: buccal nerve (sensory), masseteric nerve, deep temporal nerves, nerve to lateral pterygoid (all motor)", cat:"Anterior division"},
+  {q:"Which is the only sensory branch of the anterior division?", a:"Buccal nerve", cat:"Anterior division"},
+  {q:"What does the buccal nerve innervate?", a:"Skin of the cheek and buccal mucosa", cat:"Anterior division"},
+  {q:"With which nerve does the buccal nerve anastomose?", a:"Buccal branches of the facial nerve (CN VII)", cat:"Anterior division"},
+  {q:"What does the masseteric nerve innervate?", a:"Masseter muscle; also gives a branch to the temporomandibular joint (TMJ)", cat:"Anterior division"},
+  {q:"How many branches do the deep temporal nerves have and what do they innervate?", a:"Two branches (anterior and posterior) — both innervate the temporalis muscle", cat:"Anterior division"},
+  {q:"Name the 3 branches of the posterior division.", a:"Auriculotemporal nerve, lingual nerve, inferior alveolar nerve", cat:"Posterior division"},
+  {q:"What do the two roots of the auriculotemporal nerve encircle?", a:"Middle meningeal artery", cat:"Posterior division"},
+  {q:"Which cranial nerve provides parasympathetic fibers to the parotid gland via the auriculotemporal nerve?", a:"Glossopharyngeal nerve (CN IX)", cat:"Posterior division"},
+  {q:"Which ganglion do the parasympathetic fibers for the parotid synapse in?", a:"Otic ganglion", cat:"Posterior division"},
+  {q:"What sensory areas does the auriculotemporal nerve supply?", a:"Tragus (anterior auricle), external acoustic meatus, tympanic membrane (external surface), posterior temporal skin", cat:"Posterior division"},
+  {q:"What nerve joins the lingual nerve in the infratemporal fossa?", a:"Chorda tympani (a branch of CN VII)", cat:"Posterior division"},
+  {q:"What does the lingual nerve innervate?", a:"Sensory: anterior ⅔ of tongue, floor of oral cavity, mandibular gingiva", cat:"Posterior division"},
+  {q:"What two motor branches does the inferior alveolar nerve give off before entering the mandibular foramen?", a:"Nerve to mylohyoid and branch to anterior belly of digastric", cat:"Posterior division"},
+  {q:"What is the terminal branch of the inferior alveolar nerve?", a:"Mental nerve — exits mental foramen to innervate the lower lip", cat:"Posterior division"},
+  {q:"Which canal does the inferior alveolar nerve travel through?", a:"Mandibular canal (inside the mandible)", cat:"Posterior division"},
+  {q:"What does the mental nerve innervate and where does it exit?", a:"Innervates the lower lip; exits through the mental foramen", cat:"Posterior division"},
+];
+
+let fcDeck = [...FC_DATA];
+let fcIdx = 0;
+let fcActiveCats = new Set(FC_DATA.map(c=>c.cat));
+
+function fcBuildCats() {
+  const el = document.getElementById('fc-cats');
+  [...new Set(FC_DATA.map(c=>c.cat))].forEach(cat => {
+    const b = document.createElement('button');
+    b.className = 'filter-btn on';
+    b.textContent = cat;
+    b.onclick = (e) => { e.stopPropagation(); fcToggleCat(cat, b); };
+    el.appendChild(b);
+  });
+}
+
+function fcToggleCat(cat, btn) {
+  if (fcActiveCats.has(cat)) { fcActiveCats.delete(cat); btn.classList.remove('on'); }
+  else { fcActiveCats.add(cat); btn.classList.add('on'); }
+  fcDeck = FC_DATA.filter(x => fcActiveCats.has(x.cat));
+  if (!fcDeck.length) fcDeck = [...FC_DATA];
+  fcIdx = 0; fcRender();
+}
+
+function fcRender() {
+  document.getElementById('fc-card').classList.remove('flipped');
+  const c = fcDeck[fcIdx];
+  document.getElementById('fc-qtag').textContent = c.cat;
+  document.getElementById('fc-qtext').textContent = c.q;
+  document.getElementById('fc-atext').textContent = c.a;
+  document.getElementById('fc-prog').textContent = (fcIdx+1) + ' / ' + fcDeck.length;
+}
+
+function fcFlip() { document.getElementById('fc-card').classList.toggle('flipped'); }
+function fcNext() { fcIdx = (fcIdx+1) % fcDeck.length; fcRender(); }
+function fcPrev() { fcIdx = (fcIdx-1+fcDeck.length) % fcDeck.length; fcRender(); }
+function fcShuffle() {
+  for (let i=fcDeck.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [fcDeck[i],fcDeck[j]]=[fcDeck[j],fcDeck[i]]; }
+  fcIdx=0; fcRender();
+}
+
+/* ══════════════════════════════════════
+   FILL IN THE BLANK DATA
+   Questions referencing the diagram labels
+══════════════════════════════════════ */
+const FITB = [
+  {
+    q: "The structure labelled <em>Trigeminal ganglion</em> is also called the ganglion of ___.",
+    blank: "Gasser",
+    opts: ["Gasser","Otic","Scarpa","Geniculate"],
+    note: "The trigeminal ganglion is also known as the ganglion of Gasser or semilunar ganglion."
+  },
+  {
+    q: "The <em>Mandibular nerve</em> exits the skull through the ___.",
+    blank: "foramen ovale",
+    opts: ["foramen ovale","foramen spinosum","foramen rotundum","jugular foramen"],
+    note: "CN V3 exits via the foramen ovale — V1 uses superior orbital fissure, V2 uses foramen rotundum."
+  },
+  {
+    q: "The <em>Meningeal branch of mandibular nerve</em> re-enters the skull through the ___.",
+    blank: "foramen spinosum",
+    opts: ["foramen spinosum","foramen ovale","foramen lacerum","stylomastoid foramen"],
+    note: "The meningeal branch (nervus spinosus) re-enters via foramen spinosum to innervate the dura."
+  },
+  {
+    q: "The <em>Meningeal branch</em> accompanies which artery inside the skull?",
+    blank: "middle meningeal artery",
+    opts: ["middle meningeal artery","anterior meningeal artery","posterior meningeal artery","basilar artery"],
+    note: "In the diagram, middle meningeal artery is labelled — the meningeal branch of CN V3 follows it."
+  },
+  {
+    q: "The <em>Nerve to medial pterygoid muscle</em> also innervates tensor tympani and ___.",
+    blank: "tensor veli palatini",
+    opts: ["tensor veli palatini","buccinator","palatoglossus","levator veli palatini"],
+    note: "The nerve penetrates the medial pterygoid to reach both tensor muscles."
+  },
+  {
+    q: "The <em>Buccal nerve</em> is the only ___ branch of the anterior division.",
+    blank: "sensory",
+    opts: ["sensory","motor","parasympathetic","sympathetic"],
+    note: "The other 3 anterior division branches (masseteric, deep temporal, N. to lat. pterygoid) are motor."
+  },
+  {
+    q: "The <em>Masseteric nerve</em> also gives a branch to the ___.",
+    blank: "temporomandibular joint",
+    opts: ["temporomandibular joint","parotid gland","buccinator","hyoglossus"],
+    note: "The masseteric nerve passes anterior to the TMJ and supplies it before entering the masseter."
+  },
+  {
+    q: "The <em>Auriculotemporal nerve</em> carries parasympathetic fibres destined for the ___.",
+    blank: "parotid gland",
+    opts: ["parotid gland","submandibular gland","sublingual gland","lacrimal gland"],
+    note: "Post-ganglionic fibres from the otic ganglion (CN IX origin) travel with the auriculotemporal nerve to the parotid."
+  },
+  {
+    q: "Which ganglion relays parasympathetic fibres to the parotid gland via the auriculotemporal nerve?",
+    blank: "otic ganglion",
+    opts: ["otic ganglion","pterygopalatine ganglion","submandibular ganglion","ciliary ganglion"],
+    note: "CN IX preganglionic fibres synapse in the otic ganglion → post-ganglionic via auriculotemporal → parotid."
+  },
+  {
+    q: "The <em>Lingual nerve</em> is joined by the ___ (a branch of CN VII) in the infratemporal fossa.",
+    blank: "chorda tympani",
+    opts: ["chorda tympani","greater petrosal nerve","nerve to stapedius","auricular branch"],
+    note: "Chorda tympani carries taste from anterior ⅔ tongue and parasympathetics to submandibular/sublingual glands."
+  },
+  {
+    q: "The <em>Lingual nerve</em> provides sensory innervation to the anterior ___ of the tongue.",
+    blank: "⅔",
+    opts: ["⅔","⅓","½","¼"],
+    note: "Posterior ⅓ of tongue is innervated by CN IX (glossopharyngeal nerve)."
+  },
+  {
+    q: "The <em>Inferior alveolar nerve</em> travels through the ___.",
+    blank: "mandibular canal",
+    opts: ["mandibular canal","pterygoid canal","palatine canal","infraorbital canal"],
+    note: "The inferior alveolar nerve enters the mandibular foramen and traverses the mandibular canal."
+  },
+  {
+    q: "The terminal branch of the inferior alveolar nerve is the ___, which exits through the mental foramen.",
+    blank: "mental nerve",
+    opts: ["mental nerve","buccal nerve","lingual nerve","masseteric nerve"],
+    note: "The mental nerve is the terminal branch — it innervates the lower lip and chin skin."
+  },
+  {
+    q: "The <em>Nerve to mylohyoid muscle</em> is given off by the inferior alveolar nerve ___ it enters the mandibular foramen.",
+    blank: "before",
+    opts: ["before","after","as","inside"],
+    note: "The nerve to mylohyoid arises just prior to the inferior alveolar nerve entering the foramen."
+  },
+  {
+    q: "The nerve to mylohyoid also gives a branch to the anterior belly of the ___ muscle.",
+    blank: "digastric",
+    opts: ["digastric","geniohyoid","stylohyoid","omohyoid"],
+    note: "CN V3 supplies the anterior belly; the posterior belly of digastric is supplied by CN VII."
+  },
+  {
+    q: "In the diagram, the <em>Posterior branch of lingual nerve to submandibular ganglion</em> means the lingual nerve carries ___ fibres to the submandibular gland.",
+    blank: "parasympathetic",
+    opts: ["parasympathetic","sympathetic","motor","proprioceptive"],
+    note: "The chorda tympani (within lingual nerve) carries pre-ganglionic parasympathetics → submandibular ganglion → gland."
+  },
+  {
+    q: "The <em>Ophthalmic nerve</em> visible at top-right of the diagram is division ___ of the trigeminal nerve.",
+    blank: "V1",
+    opts: ["V1","V2","V3","V4"],
+    note: "CN V1 (ophthalmic), CN V2 (maxillary), CN V3 (mandibular) — all arising from the trigeminal ganglion."
+  },
+  {
+    q: "The <em>Maxillary nerve</em> in the diagram is CN ___.",
+    blank: "V2",
+    opts: ["V2","V1","V3","VII"],
+    note: "CN V2 (maxillary nerve) exits via foramen rotundum and innervates the middle ⅓ of the face."
+  },
+  {
+    q: "The two roots of the auriculotemporal nerve encircle the ___.",
+    blank: "middle meningeal artery",
+    opts: ["middle meningeal artery","maxillary artery","inferior alveolar artery","facial artery"],
+    note: "This encircling arrangement is a classic anatomical landmark for the auriculotemporal nerve."
+  },
+  {
+    q: "The <em>Anterior division of mandibular nerve</em> is ___ than the posterior division.",
+    blank: "smaller",
+    opts: ["smaller","larger","the same size as","always absent in"],
+    note: "The anterior division is the smaller division and is mostly motor; posterior is larger and mostly sensory."
+  },
+];
+
+let fitbQ = 0;
+let fitbScore = 0;
+let fitbAnswered = false;
+
+function fitbRender() {
+  const game = document.getElementById('fitb-game');
+  const result = document.getElementById('fitb-result');
+
+  if (fitbQ >= FITB.length) {
+    game.style.display = 'none';
+    result.classList.add('show');
+    const pct = Math.round((fitbScore / FITB.length) * 100);
+    document.getElementById('result-num').textContent = fitbScore + '/' + FITB.length;
+    let msg = pct >= 80 ? 'Excellent! You know CN V3 well.' : pct >= 60 ? 'Good effort — review the ones you missed.' : 'Keep studying — you\'ve got this!';
+    document.getElementById('result-msg').textContent = msg;
+    return;
+  }
+
+  const q = FITB[fitbQ];
+  fitbAnswered = false;
+
+  const shuffledOpts = [...q.opts].sort(() => Math.random() - 0.5);
+
+  document.getElementById('fitb-score').textContent = fitbScore + ' / ' + FITB.length;
+  document.getElementById('fitb-prog').style.width = (fitbQ / FITB.length * 100) + '%';
+  document.getElementById('fitb-qnum').textContent = 'Q' + (fitbQ+1);
+
+  game.innerHTML = `
+    <div class="fitb-card">
+      <div class="fitb-prompt">Question ${fitbQ+1} of ${FITB.length}</div>
+      <div class="fitb-q">${q.q.replace('___', '<span class="blank">___</span>')}</div>
+      <div class="options-grid" id="opts-grid">
+        ${shuffledOpts.map(o => `<button class="opt-btn" onclick="fitbAnswer(this,'${o.replace(/'/g,"\\'")}','${q.blank.replace(/'/g,"\\'")}','${q.note.replace(/'/g,"\\'")}')">${o}</button>`).join('')}
+      </div>
+      <div class="fitb-feedback" id="fitb-fb"></div>
+    </div>
+    <div class="fitb-nav">
+      <button id="skip-btn" onclick="fitbSkip()">Skip</button>
+      <button class="primary" id="next-btn" onclick="fitbNext()" disabled>Next →</button>
+    </div>
+  `;
+}
+
+function fitbAnswer(btn, chosen, correct, note) {
+  if (fitbAnswered) return;
+  fitbAnswered = true;
+
+  const grid = document.getElementById('opts-grid');
+  const allBtns = grid.querySelectorAll('.opt-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('fitb-fb');
+  const isCorrect = chosen.toLowerCase() === correct.toLowerCase();
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fitbScore++;
+    fb.className = 'fitb-feedback show ok';
+    fb.textContent = '✓ Correct! ' + note;
+  } else {
+    btn.classList.add('wrong');
+    allBtns.forEach(b => { if (b.textContent.toLowerCase() === correct.toLowerCase()) b.classList.add('reveal'); });
+    fb.className = 'fitb-feedback show bad';
+    fb.textContent = '✗ The answer is: ' + correct + '. ' + note;
+  }
+
+  document.getElementById('fitb-score').textContent = fitbScore + ' / ' + FITB.length;
+  document.getElementById('next-btn').disabled = false;
+  document.getElementById('skip-btn').disabled = true;
+}
+
+function fitbSkip() {
+  fitbAnswered = true;
+  const q = FITB[fitbQ];
+  const fb = document.getElementById('fitb-fb');
+  const grid = document.getElementById('opts-grid');
+  const allBtns = grid.querySelectorAll('.opt-btn');
+  allBtns.forEach(b => { b.disabled = true; if (b.textContent.toLowerCase() === q.blank.toLowerCase()) b.classList.add('reveal'); });
+  fb.className = 'fitb-feedback show bad';
+  fb.textContent = 'Skipped. Answer: ' + q.blank + '. ' + q.note;
+  document.getElementById('next-btn').disabled = false;
+  document.getElementById('skip-btn').disabled = true;
+}
+
+function fitbNext() {
+  fitbQ++;
+  fitbRender();
+}
+
+function fitbRestart() {
+  fitbQ = 0;
+  fitbScore = 0;
+  fitbAnswered = false;
+  document.getElementById('fitb-result').classList.remove('show');
+  document.getElementById('fitb-game').style.display = '';
+  fitbRender();
+}
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+/* ── INIT ── */
+fcBuildCats();
+fcRender();
+fitbRender();
+</script>
+</body>
+</html>
