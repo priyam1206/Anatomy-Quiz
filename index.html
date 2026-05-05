@@ -21,479 +21,134 @@
     --accent3-light: #eaecf5;
     --yellow: #e8c547;
     --yellow-light: #fdf8e3;
-    --radius: 6px;
-    --radius-lg: 12px;
+    --radius: 8px;
+    --radius-lg: 14px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; min-height: 100vh; }
 
   /* ── NAV ── */
-  nav {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 1rem;
-    display: flex;
-    align-items: center;
-    overflow-x: auto;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .nav-brand {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.85rem 1rem 0.85rem 0;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .nav-divider {
-    width: 1px;
-    height: 20px;
-    background: var(--border);
-    margin-right: 0.5rem;
-  }
-
-  .nav-btn {
-    padding: 0.85rem 0.9rem;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    color: var(--muted);
-    background: none;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-    border-bottom: 2px solid transparent;
-    transition: color 0.15s, border-color 0.15s;
-    flex-shrink: 0;
-  }
+  nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 1rem; display: flex; align-items: center; overflow-x: auto; position: sticky; top: 0; z-index: 100; -webkit-overflow-scrolling: touch; }
+  .nav-brand { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; padding: 1rem 1rem 1rem 0; white-space: nowrap; flex-shrink: 0; }
+  .nav-divider { width: 1px; height: 20px; background: var(--border); margin-right: 0.5rem; flex-shrink: 0; }
+  .nav-btn { padding: 1rem; font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--muted); background: none; border: none; cursor: pointer; white-space: nowrap; border-bottom: 2.5px solid transparent; transition: color 0.15s, border-color 0.15s; flex-shrink: 0; }
   .nav-btn:hover { color: var(--text); }
   .nav-btn.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 500; }
-  
-  #btn-back {
-    color: var(--accent);
-    font-weight: 500;
-    margin-right: 0.5rem;
-  }
-
-  #study-nav {
-    display: none;
-    align-items: center;
-  }
+  #btn-back { color: var(--accent); font-weight: 500; margin-right: 0.25rem; }
+  #study-nav { display: none; align-items: center; }
 
   /* ── PANELS ── */
-  .panel { display: none; padding: 1.25rem 1rem 3rem; max-width: 600px; margin: 0 auto; }
+  .panel { display: none; padding: 1.5rem 1rem 4rem; max-width: 680px; margin: 0 auto; }
   .panel.active { display: block; }
   .topic-content { display: none; }
   .topic-content.active { display: block; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; }
 
-  /* ── SECTION HEADER ── */
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 1rem;
-  }
+  /* ── HOME ── */
+  .greeting { text-align: center; margin: 2rem 0 1.5rem; }
+  .greeting h1 { font-size: 26px; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+  .greeting p { color: var(--muted); font-size: 15px; }
+  .topic-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 480px) { .topic-grid { grid-template-columns: 1fr 1fr; } }
+  .topic-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; min-height: 150px; }
+  .topic-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(0,0,0,0.06); transform: translateY(-2px); }
+  .topic-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 18px; }
+  .topic-icon.green { background: var(--accent-light); }
+  .topic-icon.red { background: var(--accent2-light); }
+  .topic-icon.blue { background: var(--accent3-light); }
+  .topic-card h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+  .topic-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
-  /* ════════════════════════════════
-     TOPIC SELECTION
-  ════════════════════════════════ */
-  .greeting {
-    text-align: center;
-    margin: 2rem 0;
-  }
-  .greeting h1 {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-  }
-  .greeting p {
-    color: var(--muted);
-    font-size: 15px;
-  }
-
-  .topic-grid {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 480px) {
-    .topic-grid { grid-template-columns: 1fr 1fr; }
-  }
-
-  .topic-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 140px;
-  }
-  .topic-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    transform: translateY(-2px);
-  }
-  .topic-icon {
-    width: 32px;
-    height: 32px;
-    background: var(--accent-light);
-    color: var(--accent);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-  }
-  .topic-card h3 {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 0.25rem;
-  }
-  .topic-card p {
-    font-size: 13px;
-    color: var(--muted);
-  }
-
-  /* ════════════════════════════════
-     FLASHCARDS
-  ════════════════════════════════ */
-  .filter-row {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-  .filter-btn {
-    padding: 5px 12px;
-    border-radius: 99px;
-    border: 1px solid var(--border-dark);
-    background: var(--surface);
-    color: var(--muted);
-    font-size: 12px;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s;
-  }
-  .filter-btn.on {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
-
-  .card-counter {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: center;
-    margin-bottom: 0.75rem;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .card-area {
-    perspective: 900px;
-    width: 100%;
-    height: 210px;
-    cursor: pointer;
-    margin-bottom: 1rem;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .fc {
-    width: 100%; height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.4s ease;
-  }
+  /* ── FLASHCARDS ── */
+  .filter-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .filter-btn { padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border-dark); background: var(--surface); color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+  .filter-btn.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .card-counter { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 0.75rem; font-family: 'DM Mono', monospace; }
+  .card-area { perspective: 900px; width: 100%; height: 240px; cursor: pointer; margin-bottom: 1.25rem; -webkit-tap-highlight-color: transparent; }
+  .fc { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.4s ease; }
   .fc.flipped { transform: rotateY(180deg); }
-  .fc-face {
-    position: absolute; inset: 0;
-    backface-visibility: hidden;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border);
-    background: var(--surface);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 1.25rem 1rem;
-    text-align: center;
-  }
-  .fc-face.back {
-    transform: rotateY(180deg);
-    background: var(--accent-light);
-    border-color: var(--accent);
-  }
-  .fc-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
-  }
+  .fc-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem 1.25rem; text-align: center; }
+  .fc-face.back { transform: rotateY(180deg); background: var(--accent-light); border-color: var(--accent); }
+  .fc-tag { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
   .fc-face.back .fc-tag { color: var(--accent); }
-  .fc-q { font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text); }
-  .fc-a { font-size: 14px; line-height: 1.5; color: var(--accent); font-weight: 400; }
-  .fc-hint { font-size: 11px; color: var(--muted); margin-top: 0.6rem; }
-
-  .fc-nav { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-  .fc-nav button {
-    padding: 10px;
-    border: 1px solid var(--border-dark);
-    border-radius: var(--radius);
-    background: var(--surface);
-    color: var(--text);
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    transition: background 0.12s;
-  }
+  .fc-q { font-size: 18px; font-weight: 500; line-height: 1.4; color: var(--text); }
+  .fc-a { font-size: 16px; line-height: 1.55; color: var(--accent); font-weight: 400; }
+  .fc-hint { font-size: 12px; color: var(--muted); margin-top: 0.7rem; }
+  .fc-nav { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .fc-nav button { padding: 13px; border: 1px solid var(--border-dark); border-radius: var(--radius); background: var(--surface); color: var(--text); font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.12s; }
   .fc-nav button:active { background: var(--accent-light); }
 
-  /* ════════════════════════════════
-     MIND MAP
-  ════════════════════════════════ */
-  .mindmap-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    padding: 0;
+  /* ── MIND MAP ── */
+  #panel-mm { max-width: 100%; padding: 1.5rem 0 4rem; }
+  #panel-mm .section-label { padding: 0 1.5rem; text-align: left; }
+  .mindmap-wrap { 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+    background: var(--bg); 
+    text-align: center; /* Centers the flowchart on wide screens */
   }
-  .mindmap-svg {
-    display: block;
-    min-width: 720px;
+  .mindmap-svg { 
+    display: inline-block; 
+    margin: 0 auto; 
+    user-select: none; 
+    max-height: 80vh; /* Ensures the flowchart fits within viewport height completely */
+    max-width: 100%;
+    width: auto; 
+    height: auto; 
   }
+  
+  /* Mind Map Interactivity Styles */
+  .mm-node { cursor: grab; outline: none; -webkit-tap-highlight-color: transparent; }
+  .mm-node:active { cursor: grabbing; }
+  .mm-node rect { transition: stroke-width 0.2s ease, filter 0.2s ease; }
+  .mm-node:hover rect { stroke-width: 2px; filter: brightness(0.95); }
+  .mm-node.dragging rect { filter: brightness(0.9); }
+  .mm-node text { pointer-events: none; }
 
-  /* ════════════════════════════════
-     FILL IN THE BLANK
-  ════════════════════════════════ */
-  .diagram-wrap {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    overflow: hidden;
-    margin-bottom: 1.25rem;
-  }
-  .diagram-img {
-    width: 100%;
-    display: block;
-  }
-
-  .score-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  .score-pill {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    padding: 4px 12px;
-    border-radius: 99px;
-    background: var(--accent-light);
-    color: var(--accent);
-  }
-  .progress-track {
-    flex: 1;
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    margin: 0 0.75rem;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 0.3s;
-    width: 0%;
-  }
-
-  .fitb-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem 1rem;
-    margin-bottom: 1rem;
-  }
-  .fitb-prompt {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .fitb-q {
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-    color: var(--text);
-  }
-  .blank {
-    display: inline-block;
-    border-bottom: 2px solid var(--accent);
-    min-width: 120px;
-    padding: 0 4px;
-    font-weight: 500;
-    color: var(--accent);
-    font-style: italic;
-  }
-
-  .options-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  .opt-btn {
-    padding: 10px 8px;
-    border: 1px solid var(--border-dark);
-    border-radius: var(--radius);
-    background: var(--surface);
-    color: var(--text);
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    text-align: center;
-    line-height: 1.3;
-    transition: all 0.15s;
-    -webkit-tap-highlight-color: transparent;
-  }
+  /* ── QUIZ ── */
+  .diagram-wrap { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; margin-bottom: 1.25rem; }
+  .diagram-img { width: 100%; display: block; }
+  .score-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .score-pill { font-family: 'DM Mono', monospace; font-size: 13px; padding: 5px 14px; border-radius: 99px; background: var(--accent-light); color: var(--accent); }
+  .progress-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; margin: 0 0.75rem; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; width: 0%; }
+  .fitb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem 1.25rem; margin-bottom: 1rem; }
+  .fitb-prompt { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.6rem; }
+  .fitb-q { font-size: 17px; font-weight: 500; line-height: 1.5; margin-bottom: 1.25rem; color: var(--text); }
+  .blank { display: inline-block; border-bottom: 2px solid var(--accent); min-width: 110px; padding: 0 4px; font-weight: 500; color: var(--accent); font-style: italic; }
+  .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .opt-btn { padding: 13px 10px; border: 1px solid var(--border-dark); border-radius: var(--radius); background: var(--surface); color: var(--text); font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; line-height: 1.35; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
   .opt-btn:active { transform: scale(0.97); }
   .opt-btn.correct { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 500; }
   .opt-btn.wrong { background: var(--accent2-light); border-color: var(--accent2); color: var(--accent2); }
   .opt-btn.reveal { background: var(--yellow-light); border-color: var(--yellow); color: #7a6520; }
   .opt-btn:disabled { cursor: default; }
-
-  .fitb-feedback {
-    margin-top: 0.75rem;
-    font-size: 13px;
-    padding: 8px 12px;
-    border-radius: var(--radius);
-    display: none;
-  }
+  .fitb-feedback { margin-top: 0.9rem; font-size: 14px; padding: 10px 14px; border-radius: var(--radius); display: none; line-height: 1.5; }
   .fitb-feedback.show { display: block; }
   .fitb-feedback.ok { background: var(--accent-light); color: var(--accent); }
   .fitb-feedback.bad { background: var(--accent2-light); color: var(--accent2); }
-
-  .fitb-nav {
-    display: flex;
-    gap: 8px;
-    justify-content: space-between;
-    margin-top: 0.75rem;
-  }
-  .fitb-nav button {
-    flex: 1;
-    padding: 11px;
-    border: 1px solid var(--border-dark);
-    border-radius: var(--radius);
-    background: var(--surface);
-    color: var(--text);
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-  }
-  .fitb-nav button.primary {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
+  .fitb-nav { display: flex; gap: 10px; margin-top: 0.9rem; }
+  .fitb-nav button { flex: 1; padding: 13px; border: 1px solid var(--border-dark); border-radius: var(--radius); background: var(--surface); color: var(--text); font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+  .fitb-nav button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
   .fitb-nav button:disabled { opacity: 0.4; cursor: default; }
-
-  .result-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 2rem 1rem;
-    text-align: center;
-    display: none;
-  }
+  .result-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2.5rem 1rem; text-align: center; display: none; }
   .result-card.show { display: block; }
-  .result-score-big {
-    font-family: 'DM Mono', monospace;
-    font-size: 48px;
-    font-weight: 500;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-  .result-label { font-size: 14px; color: var(--muted); margin-bottom: 1.5rem; }
-  .restart-btn {
-    padding: 11px 24px;
-    border: 1px solid var(--accent);
-    border-radius: var(--radius);
-    background: var(--accent);
-    color: #fff;
-    font-size: 14px;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-  }
+  .result-score-big { font-family: 'DM Mono', monospace; font-size: 56px; font-weight: 500; color: var(--accent); line-height: 1; margin-bottom: 0.5rem; }
+  .result-label { font-size: 16px; color: var(--muted); margin-bottom: 1.75rem; }
+  .restart-btn { padding: 13px 28px; border: 1px solid var(--accent); border-radius: var(--radius); background: var(--accent); color: #fff; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; }
 
-  /* ════════════════════════════════
-     QUICK REFERENCE
-  ════════════════════════════════ */
-  .ref-section { margin-bottom: 1.5rem; }
-  .ref-heading {
-    font-size: 11px;
-    font-family: 'DM Mono', monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .ref-row {
-    display: flex;
-    gap: 0.5rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--bg);
-    align-items: flex-start;
-  }
-  .ref-key {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    min-width: 110px;
-    flex-shrink: 0;
-    padding-top: 1px;
-  }
-  .ref-val { font-size: 13px; color: var(--text); line-height: 1.5; }
-  .tag-chip {
-    display: inline-block;
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 99px;
-    margin: 2px 2px 2px 0;
-    font-family: 'DM Mono', monospace;
-  }
+  /* ── REFERENCE ── */
+  .ref-section { margin-bottom: 1.75rem; }
+  .ref-heading { font-size: 12px; font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.6rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+  .ref-row { display: flex; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid var(--bg); align-items: flex-start; }
+  .ref-key { font-size: 13px; font-weight: 500; color: var(--muted); min-width: 120px; flex-shrink: 0; padding-top: 2px; }
+  .ref-val { font-size: 14px; color: var(--text); line-height: 1.55; }
+  .tag-chip { display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 99px; margin: 2px 2px 2px 0; font-family: 'DM Mono', monospace; }
   .tag-motor { background: var(--accent-light); color: var(--accent); }
   .tag-sensory { background: var(--accent3-light); color: var(--accent3); }
   .tag-auto { background: var(--yellow-light); color: #7a6520; }
+  .tag-bony { background: #f0ebe3; color: #7a5c30; }
+  .tag-cart { background: var(--accent2-light); color: var(--accent2); }
 </style>
 </head>
 <body>
@@ -501,45 +156,43 @@
 <nav>
   <button class="nav-btn" id="btn-back" onclick="goHome()" style="display:none;">← Topics</button>
   <div class="nav-brand" id="nav-brand">Study App</div>
-  
   <div id="study-nav">
     <div class="nav-divider"></div>
-    <button class="nav-btn active" onclick="showPanel('fc', this)">Flashcards</button>
-    <button class="nav-btn" onclick="showPanel('mm', this)">Mind Map</button>
-    <button class="nav-btn" onclick="showPanel('fitb', this)">Quiz</button>
-    <button class="nav-btn" onclick="showPanel('ref', this)">Reference</button>
+    <button class="nav-btn active" id="snav-fc" onclick="showPanel('fc',this)">Flashcards</button>
+    <button class="nav-btn" id="snav-mm" onclick="showPanel('mm',this)">Mind Map</button>
+    <button class="nav-btn" id="snav-fitb" onclick="showPanel('fitb',this)">Quiz</button>
+    <button class="nav-btn" id="snav-ref" onclick="showPanel('ref',this)">Reference</button>
   </div>
 </nav>
 
-<!-- ════════ TOPIC SELECTION ════════ -->
+<!-- ════════ HOME ════════ -->
 <div id="panel-home" class="panel active">
   <div class="greeting">
     <h1>Study Modules</h1>
-    <p>Select a topic below to begin studying</p>
+    <p>Select a topic to begin</p>
   </div>
-  
   <div class="topic-grid">
     <div class="topic-card" onclick="selectTopic('cnv3')">
-      <div class="topic-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-      </div>
+      <div class="topic-icon green">🧠</div>
       <h3>Mandibular Nerve (CN V3)</h3>
       <p>Origin, pathway, branches, and motor/sensory territories.</p>
     </div>
-
     <div class="topic-card" onclick="selectTopic('pulp')">
-      <div class="topic-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-      </div>
+      <div class="topic-icon red">🦷</div>
       <h3>Dental Pulp Zones</h3>
-      <p>Odontoblast layer, Cell-free zone of Weil, Cell-rich zone, and Pulp core.</p>
+      <p>Odontoblast, Cell-free, Cell-rich zones, and Pulp core.</p>
+    </div>
+    <div class="topic-card" onclick="selectTopic('nose')">
+      <div class="topic-icon blue">👃</div>
+      <h3>Lateral Wall of Nose</h3>
+      <p>Parts, formation, conchae, meatuses, arterial/nerve supply.</p>
     </div>
   </div>
 </div>
 
 <!-- ════════ FLASHCARDS ════════ -->
 <div id="panel-fc" class="panel">
-  <p class="section-label" id="fc-section-label">Flashcards · tap card to flip</p>
+  <p class="section-label">Flashcards · tap card to flip</p>
   <div class="filter-row" id="fc-cats"></div>
   <div class="card-counter" id="fc-prog"></div>
   <div class="card-area" onclick="fcFlip()">
@@ -564,173 +217,257 @@
 
 <!-- ════════ MIND MAP ════════ -->
 <div id="panel-mm" class="panel">
-  <p class="section-label">Mind Map · scroll sideways if needed</p>
+  <p class="section-label">Mind Map · interact and drag the bubbles!</p>
   <div class="mindmap-wrap">
-    
-    <!-- CN V3 MIND MAP -->
+
+    <!-- CN V3 -->
     <div id="mm-cnv3" class="topic-content">
-      <svg class="mindmap-svg" viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg" style="font-family:'DM Sans',sans-serif;">
-        <rect width="900" height="660" fill="#ffffff"/>
-        <!-- Connector Lines -->
-        <line x1="320" y1="330" x2="200" y2="165" stroke="#c8c4bb" stroke-width="1.2"/>
-        <line x1="320" y1="330" x2="200" y2="245" stroke="#c8c4bb" stroke-width="1.2"/>
-        <line x1="320" y1="330" x2="200" y2="330" stroke="#c8c4bb" stroke-width="1.2"/>
-        <line x1="450" y1="330" x2="570" y2="200" stroke="#c8c4bb" stroke-width="1.2"/>
-        <line x1="450" y1="330" x2="570" y2="270" stroke="#c8c4bb" stroke-width="1.2"/>
-        <line x1="400" y1="355" x2="400" y2="430" stroke="#c8c4bb" stroke-width="1.2"/>
-        <line x1="430" y1="360" x2="650" y2="430" stroke="#c8c4bb" stroke-width="1.2"/>
-        <line x1="300" y1="470" x2="170" y2="520" stroke="#c8c4bb" stroke-width="1"/>
-        <line x1="300" y1="470" x2="260" y2="530" stroke="#c8c4bb" stroke-width="1"/>
-        <line x1="300" y1="470" x2="350" y2="530" stroke="#c8c4bb" stroke-width="1"/>
-        <line x1="300" y1="470" x2="430" y2="520" stroke="#c8c4bb" stroke-width="1"/>
-        <line x1="660" y1="470" x2="560" y2="530" stroke="#c8c4bb" stroke-width="1"/>
-        <line x1="660" y1="470" x2="660" y2="530" stroke="#c8c4bb" stroke-width="1"/>
-        <line x1="660" y1="470" x2="780" y2="530" stroke="#c8c4bb" stroke-width="1"/>
-        <line x1="780" y1="560" x2="780" y2="600" stroke="#c8c4bb" stroke-width="1"/>
-        <line x1="780" y1="560" x2="840" y2="600" stroke="#c8c4bb" stroke-width="1"/>
-
-        <!-- Root Node -->
-        <rect x="320" y="300" width="130" height="60" rx="8" fill="#2d4a3e"/>
-        <text x="385" y="325" font-size="13" font-weight="500" fill="#ffffff" text-anchor="middle">Mandibular</text>
-        <text x="385" y="342" font-size="13" font-weight="500" fill="#ffffff" text-anchor="middle">Nerve (CN V3)</text>
-        <text x="385" y="357" font-size="10" fill="#9fd4be" text-anchor="middle">Mixed nerve</text>
-
-        <!-- Left Cluster: Overview -->
-        <rect x="70" y="140" width="135" height="48" rx="6" fill="#eaecf5" stroke="#b0b8e0" stroke-width="0.8"/>
-        <text x="137" y="159" font-size="10" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">ORIGIN</text>
-        <text x="137" y="176" font-size="12" font-weight="500" fill="#2a3d8b" text-anchor="middle">Trigeminal ganglion</text>
-
-        <rect x="70" y="220" width="135" height="46" rx="6" fill="#eaecf5" stroke="#b0b8e0" stroke-width="0.8"/>
-        <text x="137" y="239" font-size="10" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">TYPE</text>
-        <text x="137" y="254" font-size="12" font-weight="500" fill="#2a3d8b" text-anchor="middle">Motor + Sensory</text>
-        <text x="137" y="268" font-size="10" fill="#666c99" text-anchor="middle">+ Autonomic</text>
-
-        <rect x="70" y="305" width="135" height="50" rx="6" fill="#eaecf5" stroke="#b0b8e0" stroke-width="0.8"/>
-        <text x="137" y="323" font-size="10" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">PATHWAY</text>
-        <text x="137" y="339" font-size="11" font-weight="500" fill="#2a3d8b" text-anchor="middle">Trigeminal ganglion</text>
-        <text x="137" y="353" font-size="11" fill="#2a3d8b" text-anchor="middle">→ Foramen ovale</text>
-
-        <!-- Direct Branches -->
-        <rect x="490" y="172" width="175" height="50" rx="6" fill="#f5ece9" stroke="#d8957a" stroke-width="0.8"/>
-        <text x="577" y="191" font-size="10" fill="#9c4a35" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">MENINGEAL BRANCH</text>
-        <text x="577" y="206" font-size="12" font-weight="500" fill="#8b3a2a" text-anchor="middle">= Nervus spinosus</text>
-        <text x="577" y="220" font-size="10" fill="#9c4a35" text-anchor="middle">re-enters via foramen spinosum</text>
-
-        <rect x="490" y="244" width="175" height="46" rx="6" fill="#f5ece9" stroke="#d8957a" stroke-width="0.8"/>
-        <text x="577" y="263" font-size="10" fill="#9c4a35" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">NERVE TO MED. PTERYGOID</text>
-        <text x="577" y="278" font-size="11" font-weight="500" fill="#8b3a2a" text-anchor="middle">→ Tensor tympani</text>
-        <text x="577" y="292" font-size="11" fill="#8b3a2a" text-anchor="middle">→ Tensor veli palatini</text>
-
-        <!-- Anterior Division -->
-        <rect x="235" y="430" width="130" height="42" rx="6" fill="#e8f0ec" stroke="#6aaa87" stroke-width="0.8"/>
-        <text x="300" y="448" font-size="10" fill="#3a7a5a" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">ANTERIOR DIV.</text>
-        <text x="300" y="464" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">mostly motor</text>
-
-        <rect x="100" y="510" width="120" height="36" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
-        <text x="160" y="526" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Buccal nerve</text>
-        <text x="160" y="540" font-size="10" fill="#8a8780" text-anchor="middle">cheek · sensory</text>
-
-        <rect x="195" y="518" width="100" height="32" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
-        <text x="245" y="533" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Masseteric</text>
-        <text x="245" y="546" font-size="10" fill="#8a8780" text-anchor="middle">masseter · TMJ</text>
-
-        <rect x="305" y="518" width="100" height="32" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
-        <text x="355" y="533" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Deep temporal</text>
-        <text x="355" y="546" font-size="10" fill="#8a8780" text-anchor="middle">temporalis</text>
-
-        <rect x="408" y="510" width="100" height="36" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
-        <text x="458" y="525" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">N. to lateral</text>
-        <text x="458" y="539" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">pterygoid</text>
-
-        <!-- Posterior Division -->
-        <rect x="592" y="430" width="130" height="42" rx="6" fill="#e8f0ec" stroke="#6aaa87" stroke-width="0.8"/>
-        <text x="657" y="448" font-size="10" fill="#3a7a5a" text-anchor="middle" font-family="'DM Mono',monospace" letter-spacing="0.04em">POSTERIOR DIV.</text>
-        <text x="657" y="464" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">mostly sensory</text>
-
-        <rect x="490" y="520" width="130" height="42" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
-        <text x="555" y="537" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Auriculotemporal</text>
-        <text x="555" y="551" font-size="10" fill="#8a8780" text-anchor="middle">parotid · ear · temple</text>
-
-        <rect x="625" y="520" width="80" height="42" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
-        <text x="665" y="537" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Lingual</text>
-        <text x="665" y="551" font-size="10" fill="#8a8780" text-anchor="middle">ant. ⅔ tongue</text>
-
-        <rect x="712" y="520" width="120" height="42" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/>
-        <text x="772" y="537" font-size="11" font-weight="500" fill="#2d4a3e" text-anchor="middle">Inferior alveolar</text>
-        <text x="772" y="551" font-size="10" fill="#8a8780" text-anchor="middle">mandibular canal</text>
-
-        <!-- Inferior alveolar sub -->
-        <rect x="710" y="588" width="80" height="32" rx="5" fill="#fdf8e3" stroke="#e8c547" stroke-width="0.8"/>
-        <text x="750" y="602" font-size="10" font-weight="500" fill="#7a6520" text-anchor="middle">N. to mylohyoid</text>
-        <text x="750" y="614" font-size="9" fill="#9a8030" text-anchor="middle">+ ant. digastric</text>
-
-        <rect x="800" y="588" width="75" height="32" rx="5" fill="#fdf8e3" stroke="#e8c547" stroke-width="0.8"/>
-        <text x="837" y="604" font-size="11" font-weight="500" fill="#7a6520" text-anchor="middle">Mental nerve</text>
-        <text x="837" y="617" font-size="9" fill="#9a8030" text-anchor="middle">lower lip</text>
-      </svg>
-    </div>
-
-    <!-- PULP ZONES MIND MAP -->
-    <div id="mm-pulp" class="topic-content">
-      <svg class="mindmap-svg" viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg" style="font-family:'DM Sans',sans-serif;">
-        <rect width="900" height="660" fill="#ffffff"/>
+      <svg class="mindmap-svg" viewBox="0 0 950 680" xmlns="http://www.w3.org/2000/svg" style="font-family:'DM Sans',sans-serif; min-width: 680px;">
+        <rect width="950" height="680" fill="#f5f4f0"/>
+        <line x1="330" y1="330" x2="195" y2="168" stroke="#c8c4bb" stroke-width="1.3"/><line x1="330" y1="330" x2="195" y2="248" stroke="#c8c4bb" stroke-width="1.3"/><line x1="330" y1="330" x2="195" y2="332" stroke="#c8c4bb" stroke-width="1.3"/>
+        <line x1="460" y1="330" x2="590" y2="200" stroke="#c8c4bb" stroke-width="1.3"/><line x1="460" y1="330" x2="590" y2="278" stroke="#c8c4bb" stroke-width="1.3"/>
+        <line x1="408" y1="357" x2="390" y2="440" stroke="#c8c4bb" stroke-width="1.3"/><line x1="442" y1="360" x2="660" y2="440" stroke="#c8c4bb" stroke-width="1.3"/>
+        <line x1="310" y1="480" x2="165" y2="535" stroke="#c8c4bb" stroke-width="1"/><line x1="310" y1="480" x2="268" y2="538" stroke="#c8c4bb" stroke-width="1"/><line x1="310" y1="480" x2="358" y2="538" stroke="#c8c4bb" stroke-width="1"/><line x1="310" y1="480" x2="448" y2="532" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="660" y1="480" x2="556" y2="535" stroke="#c8c4bb" stroke-width="1"/><line x1="660" y1="480" x2="660" y2="535" stroke="#c8c4bb" stroke-width="1"/><line x1="660" y1="480" x2="790" y2="530" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="790" y1="565" x2="790" y2="610" stroke="#c8c4bb" stroke-width="1"/><line x1="790" y1="565" x2="860" y2="610" stroke="#c8c4bb" stroke-width="1"/>
         
-        <!-- Connector Lines -->
-        <line x1="450" y1="330" x2="250" y2="200" stroke="#c8c4bb" stroke-width="1.2"/>
-        <line x1="450" y1="330" x2="650" y2="200" stroke="#c8c4bb" stroke-width="1.2"/>
-        <line x1="450" y1="330" x2="250" y2="480" stroke="#c8c4bb" stroke-width="1.2"/>
-        <line x1="450" y1="330" x2="650" y2="480" stroke="#c8c4bb" stroke-width="1.2"/>
-
-        <!-- Root Node -->
-        <rect x="380" y="300" width="140" height="60" rx="8" fill="#8b3a2a"/>
-        <text x="450" y="335" font-size="14" font-weight="500" fill="#ffffff" text-anchor="middle">Dental Pulp Zones</text>
-
-        <!-- Odontoblast Zone (Top Left) -->
-        <rect x="150" y="160" width="180" height="65" rx="6" fill="#f5ece9" stroke="#d8957a" stroke-width="0.8"/>
-        <text x="240" y="180" font-size="12" font-weight="500" fill="#8b3a2a" text-anchor="middle">Odontoblast Zone</text>
-        <text x="240" y="196" font-size="10" fill="#9c4a35" text-anchor="middle">Outermost peripheral layer</text>
-        <text x="240" y="210" font-size="10" fill="#9c4a35" text-anchor="middle">Produces Type I Collagen (Predentin)</text>
-
-        <!-- Cell-Free Zone (Top Right) -->
-        <rect x="570" y="160" width="180" height="65" rx="6" fill="#fdf8e3" stroke="#e8c547" stroke-width="0.8"/>
-        <text x="660" y="180" font-size="12" font-weight="500" fill="#7a6520" text-anchor="middle">Cell-Free Zone of Weil</text>
-        <text x="660" y="196" font-size="10" fill="#9a8030" text-anchor="middle">Nearly devoid of cells (40µm wide)</text>
-        <text x="660" y="210" font-size="10" fill="#9a8030" text-anchor="middle">Traversed by nerves & blood vessels</text>
-
-        <!-- Cell-Rich Zone (Bottom Left) -->
-        <rect x="150" y="460" width="180" height="65" rx="6" fill="#e8f0ec" stroke="#6aaa87" stroke-width="0.8"/>
-        <text x="240" y="480" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Cell-Rich Zone</text>
-        <text x="240" y="496" font-size="10" fill="#3a7a5a" text-anchor="middle">High density of Fibroblasts</text>
-        <text x="240" y="510" font-size="10" fill="#3a7a5a" text-anchor="middle">Contains macrophages & lymphocytes</text>
-
-        <!-- Pulp Core (Bottom Right) -->
-        <rect x="570" y="460" width="180" height="65" rx="6" fill="#eaecf5" stroke="#b0b8e0" stroke-width="0.8"/>
-        <text x="660" y="480" font-size="12" font-weight="500" fill="#2a3d8b" text-anchor="middle">Pulp Core (Pulp Proper)</text>
-        <text x="660" y="496" font-size="10" fill="#666c99" text-anchor="middle">Central connective tissue mass</text>
-        <text x="660" y="510" font-size="10" fill="#666c99" text-anchor="middle">Larger blood vessels & nerves</text>
-
+        <!-- Nodes -->
+        <rect x="330" y="302" width="140" height="64" rx="9" fill="#2d4a3e"/><text x="400" y="327" font-size="14" font-weight="500" fill="#fff" text-anchor="middle">Mandibular</text><text x="400" y="344" font-size="14" font-weight="500" fill="#fff" text-anchor="middle">Nerve (CN V3)</text><text x="400" y="360" font-size="11" fill="#9fd4be" text-anchor="middle">Mixed nerve</text>
+        <rect x="70" y="142" width="150" height="50" rx="7" fill="#eaecf5" stroke="#b0b8e0" stroke-width="0.8"/><text x="145" y="162" font-size="10" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace">ORIGIN</text><text x="145" y="180" font-size="13" font-weight="500" fill="#2a3d8b" text-anchor="middle">Trigeminal ganglion</text>
+        <rect x="70" y="222" width="150" height="48" rx="7" fill="#eaecf5" stroke="#b0b8e0" stroke-width="0.8"/><text x="145" y="242" font-size="10" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace">TYPE</text><text x="145" y="258" font-size="13" font-weight="500" fill="#2a3d8b" text-anchor="middle">Motor + Sensory + Auto</text>
+        <rect x="70" y="308" width="150" height="48" rx="7" fill="#eaecf5" stroke="#b0b8e0" stroke-width="0.8"/><text x="145" y="328" font-size="10" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace">PATHWAY</text><text x="145" y="344" font-size="12" font-weight="500" fill="#2a3d8b" text-anchor="middle">Ganglion → Foramen ovale</text>
+        <rect x="508" y="175" width="185" height="50" rx="7" fill="#f5ece9" stroke="#d8957a" stroke-width="0.8"/><text x="600" y="194" font-size="10" fill="#9c4a35" text-anchor="middle" font-family="'DM Mono',monospace">MENINGEAL BRANCH</text><text x="600" y="210" font-size="12" font-weight="500" fill="#8b3a2a" text-anchor="middle">Nervus spinosus → foramen spinosum</text>
+        <rect x="508" y="252" width="185" height="48" rx="7" fill="#f5ece9" stroke="#d8957a" stroke-width="0.8"/><text x="600" y="270" font-size="10" fill="#9c4a35" text-anchor="middle" font-family="'DM Mono',monospace">N. TO MED. PTERYGOID</text><text x="600" y="286" font-size="11" font-weight="500" fill="#8b3a2a" text-anchor="middle">+ Tensor tympani + Tensor veli palatini</text>
+        <rect x="245" y="442" width="140" height="42" rx="7" fill="#e8f0ec" stroke="#6aaa87" stroke-width="0.8"/><text x="315" y="460" font-size="10" fill="#3a7a5a" text-anchor="middle" font-family="'DM Mono',monospace">ANTERIOR DIV.</text><text x="315" y="476" font-size="13" font-weight="500" fill="#2d4a3e" text-anchor="middle">mostly motor</text>
+        <rect x="98" y="519" width="118" height="34" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/><text x="157" y="534" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Buccal nerve</text><text x="157" y="548" font-size="10" fill="#8a8780" text-anchor="middle">cheek · sensory</text>
+        <rect x="208" y="522" width="108" height="30" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/><text x="262" y="536" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Masseteric</text><text x="262" y="549" font-size="10" fill="#8a8780" text-anchor="middle">masseter · TMJ</text>
+        <rect x="318" y="522" width="108" height="30" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/><text x="372" y="536" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Deep temporal</text><text x="372" y="549" font-size="10" fill="#8a8780" text-anchor="middle">temporalis</text>
+        <rect x="408" y="518" width="108" height="36" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/><text x="462" y="533" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">N. lat. pterygoid</text><text x="462" y="548" font-size="10" fill="#8a8780" text-anchor="middle">motor only</text>
+        <rect x="602" y="442" width="140" height="42" rx="7" fill="#e8f0ec" stroke="#6aaa87" stroke-width="0.8"/><text x="672" y="460" font-size="10" fill="#3a7a5a" text-anchor="middle" font-family="'DM Mono',monospace">POSTERIOR DIV.</text><text x="672" y="476" font-size="13" font-weight="500" fill="#2d4a3e" text-anchor="middle">mostly sensory</text>
+        <rect x="490" y="522" width="138" height="38" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/><text x="559" y="537" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Auriculotemporal</text><text x="559" y="552" font-size="10" fill="#8a8780" text-anchor="middle">parotid · ear · temple</text>
+        <rect x="632" y="522" width="88" height="38" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/><text x="676" y="537" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Lingual</text><text x="676" y="552" font-size="10" fill="#8a8780" text-anchor="middle">ant ⅔ tongue</text>
+        <rect x="724" y="516" width="135" height="46" rx="5" fill="#f5f4f0" stroke="#c8c4bb" stroke-width="0.8"/><text x="791" y="532" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Inferior alveolar</text><text x="791" y="547" font-size="10" fill="#8a8780" text-anchor="middle">mandibular canal</text>
+        <rect x="727" y="596" width="110" height="32" rx="5" fill="#fdf8e3" stroke="#e8c547" stroke-width="0.8"/><text x="782" y="611" font-size="11" font-weight="500" fill="#7a6520" text-anchor="middle">N. to mylohyoid</text><text x="782" y="624" font-size="9" fill="#9a8030" text-anchor="middle">+ ant. digastric</text>
+        <rect x="845" y="596" width="82" height="32" rx="5" fill="#fdf8e3" stroke="#e8c547" stroke-width="0.8"/><text x="886" y="611" font-size="12" font-weight="500" fill="#7a6520" text-anchor="middle">Mental n.</text><text x="886" y="624" font-size="9" fill="#9a8030" text-anchor="middle">lower lip</text>
       </svg>
     </div>
+
+    <!-- PULP ZONES -->
+    <div id="mm-pulp" class="topic-content">
+      <svg class="mindmap-svg" viewBox="0 0 900 580" xmlns="http://www.w3.org/2000/svg" style="font-family:'DM Sans',sans-serif; min-width: 600px;">
+        <rect width="900" height="580" fill="#f5f4f0"/>
+        <line x1="450" y1="290" x2="245" y2="175" stroke="#c8c4bb" stroke-width="1.3"/>
+        <line x1="450" y1="290" x2="660" y2="175" stroke="#c8c4bb" stroke-width="1.3"/>
+        <line x1="450" y1="290" x2="245" y2="418" stroke="#c8c4bb" stroke-width="1.3"/>
+        <line x1="450" y1="290" x2="660" y2="418" stroke="#c8c4bb" stroke-width="1.3"/>
+        <rect x="370" y="262" width="160" height="56" rx="9" fill="#8b3a2a"/><text x="450" y="291" font-size="14" font-weight="500" fill="#fff" text-anchor="middle">Dental Pulp Zones</text><text x="450" y="308" font-size="11" fill="#f0c8b8" text-anchor="middle">4 zones, outer → inner</text>
+        <rect x="118" y="132" width="255" height="82" rx="8" fill="#f5ece9" stroke="#d8957a"/><text x="245" y="154" font-size="12" font-weight="600" fill="#8b3a2a" text-anchor="middle">1 · Odontoblast Zone</text><text x="245" y="172" font-size="11" fill="#9c4a35" text-anchor="middle">Peripheral layer · Type I Collagen</text><text x="245" y="188" font-size="11" fill="#9c4a35" text-anchor="middle">Process extends to DEJ</text>
+        <rect x="527" y="132" width="255" height="82" rx="8" fill="#fdf8e3" stroke="#e8c547"/><text x="654" y="154" font-size="12" font-weight="600" fill="#7a6520" text-anchor="middle">2 · Cell-Free Zone (Weil)</text><text x="654" y="172" font-size="11" fill="#9a8030" text-anchor="middle">40µm · no cells · prominent in crown</text><text x="654" y="188" font-size="11" fill="#9a8030" text-anchor="middle">Traversed by nerves + vessels</text>
+        <rect x="118" y="378" width="255" height="82" rx="8" fill="#e8f0ec" stroke="#6aaa87"/><text x="245" y="400" font-size="12" font-weight="600" fill="#2d4a3e" text-anchor="middle">3 · Cell-Rich Zone</text><text x="245" y="418" font-size="11" fill="#3a7a5a" text-anchor="middle">High density of fibroblasts</text><text x="245" y="434" font-size="11" fill="#3a7a5a" text-anchor="middle">Macrophages + lymphocytes</text>
+        <rect x="527" y="378" width="255" height="82" rx="8" fill="#eaecf5" stroke="#b0b8e0"/><text x="654" y="400" font-size="12" font-weight="600" fill="#2a3d8b" text-anchor="middle">4 · Pulp Core (Pulp Proper)</text><text x="654" y="418" font-size="11" fill="#666c99" text-anchor="middle">Central connective tissue</text><text x="654" y="434" font-size="11" fill="#666c99" text-anchor="middle">Fibroblasts · large vessels · nerves</text>
+        <text x="450" y="545" font-size="11" fill="#c8c4bb" text-anchor="middle">Outer ←————————————————————→ Inner</text>
+      </svg>
+    </div>
+
+    <!-- LATERAL WALL OF NOSE -->
+    <div id="mm-nose" class="topic-content">
+      <svg class="mindmap-svg" viewBox="0 0 900 1120" xmlns="http://www.w3.org/2000/svg" style="font-family:'DM Sans',sans-serif; min-width: 600px;">
+        <rect width="900" height="1120" fill="#f5f4f0"/>
+
+        <!-- ══ ROW 1: ROOT ══ -->
+        <rect x="330" y="30" width="240" height="60" rx="10" fill="#2a3d8b"/>
+        <text x="450" y="56" font-size="15" font-weight="600" fill="#fff" text-anchor="middle">Lateral Wall of Nose</text>
+        <text x="450" y="76" font-size="11" fill="#b0b8e0" text-anchor="middle">Irregular due to 3 bony conchae</text>
+
+        <!-- root → 3 PARTS -->
+        <line x1="450" y1="90" x2="450" y2="132" stroke="#c8c4bb" stroke-width="1.5"/>
+
+        <!-- ══ ROW 2: 3 PARTS ══ -->
+        <rect x="330" y="132" width="240" height="48" rx="8" fill="#f5ece9" stroke="#d8957a"/>
+        <text x="450" y="152" font-size="11" fill="#9c4a35" text-anchor="middle" font-family="'DM Mono',monospace">3 PARTS (Ant → Post)</text>
+        <text x="450" y="170" font-size="13" font-weight="500" fill="#8b3a2a" text-anchor="middle">Vestibule · Atrium · Conchae region</text>
+
+        <!-- parts → part nodes -->
+        <line x1="370" y1="180" x2="230" y2="218" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="450" y1="180" x2="450" y2="218" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="530" y1="180" x2="670" y2="218" stroke="#c8c4bb" stroke-width="1"/>
+
+        <rect x="130" y="218" width="196" height="42" rx="7" fill="#fff" stroke="#e0ddd6"/>
+        <text x="228" y="236" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Vestibule</text>
+        <text x="228" y="252" font-size="11" fill="#8a8780" text-anchor="middle">Modified skin · vibrissae</text>
+
+        <rect x="352" y="218" width="196" height="42" rx="7" fill="#fff" stroke="#e0ddd6"/>
+        <text x="450" y="236" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Atrium</text>
+        <text x="450" y="252" font-size="11" fill="#8a8780" text-anchor="middle">Middle part · above middle meatus</text>
+
+        <rect x="574" y="218" width="196" height="42" rx="7" fill="#fff" stroke="#e0ddd6"/>
+        <text x="672" y="236" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Conchae region</text>
+        <text x="672" y="252" font-size="11" fill="#8a8780" text-anchor="middle">Posterior · meatuses here</text>
+
+        <!-- gap -->
+        <line x1="450" y1="90" x2="90" y2="320" stroke="#c8c4bb" stroke-width="1.2" stroke-dasharray="4"/>
+        <line x1="450" y1="90" x2="810" y2="320" stroke="#c8c4bb" stroke-width="1.2" stroke-dasharray="4"/>
+
+        <!-- ══ ROW 3: FORMATION (LEFT) + CONCHAE (RIGHT) ══ -->
+        <!-- FORMATION -->
+        <rect x="30" y="320" width="370" height="48" rx="8" fill="#f0ebe3" stroke="#c8a060"/>
+        <text x="215" y="340" font-size="11" fill="#7a5c30" text-anchor="middle" font-family="'DM Mono',monospace">FORMATION OF LATERAL WALL</text>
+        <text x="215" y="358" font-size="13" font-weight="500" fill="#5a3a10" text-anchor="middle">Bony · Cartilaginous · Cuticular</text>
+
+        <line x1="135" y1="368" x2="95" y2="404" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="215" y1="368" x2="215" y2="404" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="305" y1="368" x2="340" y2="404" stroke="#c8c4bb" stroke-width="1"/>
+
+        <rect x="30" y="404" width="135" height="52" rx="6" fill="#fff" stroke="#c8c4bb"/>
+        <text x="97" y="422" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Bony part</text>
+        <text x="97" y="437" font-size="10" fill="#8a8780" text-anchor="middle">7 bones anterior</text>
+        <text x="97" y="450" font-size="10" fill="#8a8780" text-anchor="middle">to posterior</text>
+
+        <rect x="147" y="404" width="140" height="52" rx="6" fill="#fff" stroke="#c8c4bb"/>
+        <text x="217" y="422" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Cartilaginous</text>
+        <text x="217" y="437" font-size="10" fill="#8a8780" text-anchor="middle">Sup + Inf nasal</text>
+        <text x="217" y="450" font-size="10" fill="#8a8780" text-anchor="middle">cartilage + ala</text>
+
+        <rect x="299" y="404" width="105" height="52" rx="6" fill="#fff" stroke="#c8c4bb"/>
+        <text x="351" y="422" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Cuticular</text>
+        <text x="351" y="437" font-size="10" fill="#8a8780" text-anchor="middle">Fibrofatty tissue</text>
+        <text x="351" y="450" font-size="10" fill="#8a8780" text-anchor="middle">+ skin</text>
+
+        <!-- 7 bony label detail -->
+        <rect x="30" y="474" width="374" height="38" rx="6" fill="#fdf8e3" stroke="#e8c547"/>
+        <text x="217" y="490" font-size="11" fill="#7a6520" text-anchor="middle">Nasal · Frontal proc. maxilla · Lacrimal · Ethmoid</text>
+        <text x="217" y="506" font-size="11" fill="#7a6520" text-anchor="middle">Inf. concha · Palatine plate · Medial pterygoid plate</text>
+
+        <!-- CONCHAE -->
+        <rect x="500" y="320" width="370" height="48" rx="8" fill="#e8f0ec" stroke="#6aaa87"/>
+        <text x="685" y="340" font-size="11" fill="#3a7a5a" text-anchor="middle" font-family="'DM Mono',monospace">NASAL CONCHAE</text>
+        <text x="685" y="358" font-size="13" font-weight="500" fill="#2d4a3e" text-anchor="middle">3 curved bony projections ↓ and medially</text>
+
+        <line x1="600" y1="368" x2="572" y2="404" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="685" y1="368" x2="685" y2="404" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="772" y1="368" x2="800" y2="404" stroke="#c8c4bb" stroke-width="1"/>
+
+        <rect x="500" y="404" width="145" height="52" rx="6" fill="#fff" stroke="#c8c4bb"/>
+        <text x="572" y="422" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Inferior concha</text>
+        <text x="572" y="437" font-size="10" fill="#8a8780" text-anchor="middle">Independent bone</text>
+        <text x="572" y="450" font-size="10" fill="#8a8780" text-anchor="middle">(not ethmoid)</text>
+
+        <rect x="612" y="404" width="148" height="52" rx="6" fill="#fff" stroke="#c8c4bb"/>
+        <text x="686" y="422" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Middle concha</text>
+        <text x="686" y="437" font-size="10" fill="#8a8780" text-anchor="middle">Projection from</text>
+        <text x="686" y="450" font-size="10" fill="#8a8780" text-anchor="middle">ethmoidal labyrinth</text>
+
+        <rect x="727" y="404" width="143" height="52" rx="6" fill="#fff" stroke="#c8c4bb"/>
+        <text x="798" y="422" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Superior concha</text>
+        <text x="798" y="437" font-size="10" fill="#8a8780" text-anchor="middle">Ethmoidal · smallest</text>
+        <text x="798" y="450" font-size="10" fill="#8a8780" text-anchor="middle">above post. middle</text>
+
+        <!-- ══ ROW 4: MEATUSES ══ -->
+        <line x1="450" y1="530" x2="450" y2="568" stroke="#c8c4bb" stroke-width="1.5"/>
+
+        <!-- <rect x="270" y="530" width="360" height="0" rx="0" fill="none"/> spacer removed for clean script parse -->
+
+        <rect x="220" y="568" width="460" height="48" rx="8" fill="#e8f0ec" stroke="#6aaa87"/>
+        <text x="450" y="588" font-size="11" fill="#3a7a5a" text-anchor="middle" font-family="'DM Mono',monospace">MEATUSES — PASSAGES BELOW CONCHAE</text>
+        <text x="450" y="606" font-size="13" font-weight="500" fill="#2d4a3e" text-anchor="middle">Each communicates freely with nasal cavity</text>
+
+        <line x1="330" y1="616" x2="205" y2="652" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="450" y1="616" x2="450" y2="652" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="580" y1="616" x2="705" y2="652" stroke="#c8c4bb" stroke-width="1"/>
+
+        <!-- Inferior meatus -->
+        <rect x="80" y="652" width="245" height="52" rx="7" fill="#fff" stroke="#c8c4bb"/>
+        <text x="202" y="671" font-size="13" font-weight="500" fill="#2d4a3e" text-anchor="middle">Inferior meatus</text>
+        <text x="202" y="687" font-size="11" fill="#8a8780" text-anchor="middle">Largest · nasolacrimal duct opens here</text>
+
+        <!-- Middle meatus -->
+        <rect x="327" y="652" width="246" height="52" rx="7" fill="#fdf8e3" stroke="#e8c547"/>
+        <text x="450" y="671" font-size="13" font-weight="500" fill="#7a6520" text-anchor="middle">Middle meatus</text>
+        <text x="450" y="687" font-size="11" fill="#9a8030" text-anchor="middle">Ethmoidal bulla · Hiatus · Infundibulum</text>
+
+        <!-- Superior meatus -->
+        <rect x="575" y="652" width="245" height="52" rx="7" fill="#fff" stroke="#c8c4bb"/>
+        <text x="697" y="671" font-size="13" font-weight="500" fill="#2d4a3e" text-anchor="middle">Superior meatus</text>
+        <text x="697" y="687" font-size="11" fill="#8a8780" text-anchor="middle">Shortest · post. ethmoidal sinuses</text>
+
+        <!-- Middle meatus detail -->
+        <line x1="383" y1="704" x2="283" y2="738" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="450" y1="704" x2="450" y2="738" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="517" y1="704" x2="617" y2="738" stroke="#c8c4bb" stroke-width="1"/>
+
+        <rect x="172" y="738" width="220" height="44" rx="6" fill="#fdf8e3" stroke="#e8c547"/>
+        <text x="282" y="756" font-size="12" font-weight="500" fill="#7a6520" text-anchor="middle">Ethmoidal bulla</text>
+        <text x="282" y="773" font-size="10" fill="#9a8030" text-anchor="middle">Mid. ethmoid sinuses open at top</text>
+
+        <rect x="340" y="738" width="220" height="44" rx="6" fill="#fdf8e3" stroke="#e8c547"/>
+        <text x="450" y="756" font-size="12" font-weight="500" fill="#7a6520" text-anchor="middle">Hiatus semilunaris</text>
+        <text x="450" y="773" font-size="10" fill="#9a8030" text-anchor="middle">Deep semicircular sulcus below bulla</text>
+
+        <rect x="508" y="738" width="220" height="44" rx="6" fill="#fdf8e3" stroke="#e8c547"/>
+        <text x="618" y="756" font-size="12" font-weight="500" fill="#7a6520" text-anchor="middle">Infundibulum</text>
+        <text x="618" y="773" font-size="10" fill="#9a8030" text-anchor="middle">Short passage at ant. end of hiatus</text>
+
+        <!-- Sinus openings into middle meatus -->
+        <rect x="172" y="800" width="556" height="42" rx="6" fill="#fff" stroke="#c8c4bb"/>
+        <text x="450" y="817" font-size="11" fill="#2d4a3e" text-anchor="middle">Opens in middle meatus: Frontal sinus (ant. hiatus) ·</text>
+        <text x="450" y="833" font-size="11" fill="#2d4a3e" text-anchor="middle">Ant. ethmoidal sinus · Maxillary sinus (post. hiatus)</text>
+        <line x1="450" y1="782" x2="450" y2="800" stroke="#c8c4bb" stroke-width="1"/>
+
+        <!-- Sphenoethmoidal recess -->
+        <rect x="270" y="862" width="360" height="44" rx="7" fill="#eaecf5" stroke="#b0b8e0"/>
+        <text x="450" y="880" font-size="11" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace">SPHENOETHMOIDAL RECESS</text>
+        <text x="450" y="898" font-size="12" font-weight="500" fill="#2a3d8b" text-anchor="middle">Above superior concha · opens sphenoidal sinus</text>
+        <line x1="697" y1="704" x2="450" y2="862" stroke="#c8c4bb" stroke-width="1" stroke-dasharray="4"/>
+
+        <!-- ══ ROW 5: SUPPLY ══ -->
+        <rect x="80" y="932" width="740" height="48" rx="8" fill="#eaecf5" stroke="#b0b8e0"/>
+        <text x="450" y="952" font-size="11" fill="#666c99" text-anchor="middle" font-family="'DM Mono',monospace">SUPPLY — DIVIDED INTO 4 QUADRANTS</text>
+        <text x="450" y="970" font-size="12" font-weight="500" fill="#2a3d8b" text-anchor="middle">Artery + Nerve (both follow same quadrant pattern)</text>
+
+        <line x1="210" y1="980" x2="175" y2="1014" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="360" y1="980" x2="350" y2="1014" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="540" y1="980" x2="550" y2="1014" stroke="#c8c4bb" stroke-width="1"/>
+        <line x1="690" y1="980" x2="725" y2="1014" stroke="#c8c4bb" stroke-width="1"/>
+
+        <rect x="60" y="1014" width="228" height="58" rx="7" fill="#fff" stroke="#c8c4bb"/>
+        <text x="174" y="1032" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Anterosuperior</text>
+        <text x="174" y="1048" font-size="10" fill="#8a8780" text-anchor="middle">A: Ant. ethmoidal artery</text>
+        <text x="174" y="1063" font-size="10" fill="#8a8780" text-anchor="middle">N: Ant. ethmoidal n. (CN V1)</text>
+
+        <rect x="234" y="1014" width="228" height="58" rx="7" fill="#fff" stroke="#c8c4bb"/>
+        <text x="348" y="1032" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Anteroinferior</text>
+        <text x="348" y="1048" font-size="10" fill="#8a8780" text-anchor="middle">A: Facial artery branches</text>
+        <text x="348" y="1063" font-size="10" fill="#8a8780" text-anchor="middle">N: Ant. sup. alveolar n. (CN V2)</text>
+
+        <rect x="438" y="1014" width="228" height="58" rx="7" fill="#fff" stroke="#c8c4bb"/>
+        <text x="552" y="1032" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Posterosuperior</text>
+        <text x="552" y="1048" font-size="10" fill="#8a8780" text-anchor="middle">A: Sphenopalatine artery</text>
+        <text x="552" y="1063" font-size="10" fill="#8a8780" text-anchor="middle">N: Lat. post. sup. nasal n.</text>
+
+        <rect x="612" y="1014" width="228" height="58" rx="7" fill="#fff" stroke="#c8c4bb"/>
+        <text x="726" y="1032" font-size="12" font-weight="500" fill="#2d4a3e" text-anchor="middle">Posteroinferior</text>
+        <text x="726" y="1048" font-size="10" fill="#8a8780" text-anchor="middle">A: Greater palatine artery</text>
+        <text x="726" y="1063" font-size="10" fill="#8a8780" text-anchor="middle">N: Ant. palatine n.</text>
+
+        <!-- vertical connector from top to supply row -->
+        <line x1="450" y1="90" x2="450" y2="932" stroke="#e0ddd6" stroke-width="1" stroke-dasharray="6 4"/>
+      </svg>
+    </div>
+
   </div>
 </div>
 
-<!-- ════════ FILL IN THE BLANK ════════ -->
+<!-- ════════ QUIZ ════════ -->
 <div id="panel-fitb" class="panel">
   <p class="section-label">Quiz · test your knowledge</p>
-
-  <div class="diagram-wrap" id="fitb-diagram" style="display: none;">
-    <img src="1777778393572_image.png" class="diagram-img" alt="Diagram" onerror="this.style.display='none'; document.getElementById('img-fallback').style.display='block'"/>
-    <div id="img-fallback" style="display:none; padding:1rem; text-align:center; color:var(--muted); font-size:13px;">
-      (Refer to the diagram from your textbook while answering)
-    </div>
+  <div class="diagram-wrap" id="fitb-diagram" style="display:none;">
+    <img src="1777778393572_image.png" class="diagram-img" alt="CN V3 Diagram" onerror="this.style.display='none'"/>
   </div>
-
   <div class="score-bar">
     <span class="score-pill" id="fitb-score">0 / 0</span>
     <div class="progress-track"><div class="progress-fill" id="fitb-prog"></div></div>
-    <span style="font-family:'DM Mono',monospace; font-size:12px; color:var(--muted);" id="fitb-qnum">Q1</span>
+    <span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);" id="fitb-qnum">Q1</span>
   </div>
-
   <div id="fitb-game"></div>
   <div class="result-card" id="fitb-result">
     <div class="result-score-big" id="result-num"></div>
@@ -739,243 +476,307 @@
   </div>
 </div>
 
-<!-- ════════ QUICK REFERENCE ════════ -->
+<!-- ════════ REFERENCE ════════ -->
 <div id="panel-ref" class="panel">
   <p class="section-label">Quick Reference</p>
 
-  <!-- CN V3 REFERENCE -->
+  <!-- CN V3 -->
   <div id="ref-cnv3" class="topic-content">
-    <div class="ref-section">
-      <div class="ref-heading">Overview</div>
+    <div class="ref-section"><div class="ref-heading">Overview</div>
       <div class="ref-row"><div class="ref-key">Type</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span><span class="tag-chip tag-sensory">Sensory</span><span class="tag-chip tag-auto">Autonomic</span></div></div>
-      <div class="ref-row"><div class="ref-key">Origin</div><div class="ref-val">Trigeminal ganglion of Gasser (sensory) + Motor nucleus of CN V (motor)</div></div>
+      <div class="ref-row"><div class="ref-key">Origin</div><div class="ref-val">Trigeminal ganglion of Gasser (sensory) + Motor nucleus CN V (motor)</div></div>
       <div class="ref-row"><div class="ref-key">Exit skull</div><div class="ref-val">Foramen ovale → infratemporal fossa</div></div>
       <div class="ref-row"><div class="ref-key">Divisions</div><div class="ref-val">Anterior (smaller, mostly motor) · Posterior (larger, mostly sensory)</div></div>
-      <div class="ref-row"><div class="ref-key">Sensory area</div><div class="ref-val">Lower ⅓ face, lower lip, mandible, preauricular/temporal skin, anterior ⅔ tongue, cheek, dura of middle cranial fossa</div></div>
-      <div class="ref-row"><div class="ref-key">Motor muscles</div><div class="ref-val">Masticatory muscles, mylohyoid, anterior belly of digastric, tensor tympani, tensor veli palatini</div></div>
+      <div class="ref-row"><div class="ref-key">Sensory area</div><div class="ref-val">Lower ⅓ face, lower lip, mandible, temporal/preauricular, ant ⅔ tongue, cheek, dura of middle cranial fossa</div></div>
+      <div class="ref-row"><div class="ref-key">Motor muscles</div><div class="ref-val">Masticatory muscles, mylohyoid, ant belly digastric, tensor tympani, tensor veli palatini (all from 1st pharyngeal arch)</div></div>
     </div>
-    <div class="ref-section">
-      <div class="ref-heading">Direct branches (pre-bifurcation)</div>
-      <div class="ref-row"><div class="ref-key">Meningeal branch</div><div class="ref-val">= Nervus spinosus · re-enters skull via foramen spinosum · innervates dura mater of middle cranial fossa (follows middle meningeal artery)</div></div>
-      <div class="ref-row"><div class="ref-key">N. to med. pterygoid</div><div class="ref-val">Innervates medial pterygoid, tensor tympani, tensor veli palatini</div></div>
+    <div class="ref-section"><div class="ref-heading">Direct branches</div>
+      <div class="ref-row"><div class="ref-key">Meningeal branch</div><div class="ref-val">= Nervus spinosus · re-enters via foramen spinosum · dura of middle cranial fossa</div></div>
+      <div class="ref-row"><div class="ref-key">N. to med. pterygoid</div><div class="ref-val">Medial pterygoid + tensor tympani + tensor veli palatini</div></div>
     </div>
-    <div class="ref-section">
-      <div class="ref-heading">Anterior division</div>
-      <div class="ref-row"><div class="ref-key">Buccal nerve</div><div class="ref-val"><span class="tag-chip tag-sensory">Sensory</span> Skin of cheek + buccal mucosa · anastomoses with CN VII buccal branches</div></div>
-      <div class="ref-row"><div class="ref-key">Masseteric nerve</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span> Masseter + TMJ branch</div></div>
-      <div class="ref-row"><div class="ref-key">Deep temporal nn.</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span> Anterior + posterior branches → temporalis muscle</div></div>
-      <div class="ref-row"><div class="ref-key">N. to lat. pterygoid</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span> Lateral pterygoid muscle</div></div>
+    <div class="ref-section"><div class="ref-heading">Anterior division</div>
+      <div class="ref-row"><div class="ref-key">Buccal nerve</div><div class="ref-val"><span class="tag-chip tag-sensory">Sensory</span> Cheek skin + buccal mucosa · anastomoses CN VII</div></div>
+      <div class="ref-row"><div class="ref-key">Masseteric n.</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span> Masseter + TMJ branch</div></div>
+      <div class="ref-row"><div class="ref-key">Deep temporal nn.</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span> 2 branches → temporalis</div></div>
+      <div class="ref-row"><div class="ref-key">N. lat. pterygoid</div><div class="ref-val"><span class="tag-chip tag-motor">Motor</span> Lateral pterygoid</div></div>
     </div>
-    <div class="ref-section">
-      <div class="ref-heading">Posterior division</div>
-      <div class="ref-row"><div class="ref-key">Auriculotemporal n.</div><div class="ref-val">Two roots encircle middle meningeal artery · parasympathetic from CN IX via otic ganglion to parotid · supplies tragus, EAM, tympanic membrane, temporal skin</div></div>
-      <div class="ref-row"><div class="ref-key">Lingual nerve</div><div class="ref-val"><span class="tag-chip tag-sensory">Sensory</span> Joins chorda tympani (CN VII) · anterior ⅔ tongue, floor of mouth, mandibular gingiva</div></div>
-      <div class="ref-row"><div class="ref-key">Inferior alveolar n.</div><div class="ref-val">Enters mandibular foramen → mandibular canal → terminal branch = mental nerve (lower lip via mental foramen) · gives off N. to mylohyoid + ant. belly of digastric</div></div>
+    <div class="ref-section"><div class="ref-heading">Posterior division</div>
+      <div class="ref-row"><div class="ref-key">Auriculotemporal</div><div class="ref-val">Encircles middle meningeal artery · CN IX → otic ganglion → parotid · supplies tragus, EAM, tympanic membrane, temporal skin</div></div>
+      <div class="ref-row"><div class="ref-key">Lingual nerve</div><div class="ref-val"><span class="tag-chip tag-sensory">Sensory</span> Joins chorda tympani (CN VII) · ant ⅔ tongue, floor of mouth, mandibular gingiva</div></div>
+      <div class="ref-row"><div class="ref-key">Inferior alveolar</div><div class="ref-val">Mandibular canal → mental nerve (lower lip, mental foramen) · gives N. to mylohyoid + ant belly digastric</div></div>
     </div>
   </div>
 
-  <!-- PULP ZONES REFERENCE -->
+  <!-- PULP -->
   <div id="ref-pulp" class="topic-content">
-    <div class="ref-section">
-      <div class="ref-heading">Overview</div>
-      <div class="ref-row"><div class="ref-key">Pulp Structure</div><div class="ref-val">Soft connective tissue supporting the dentin. Progressing from the dentin-pulp junction inwards, it exhibits 4 distinct zones.</div></div>
+    <div class="ref-section"><div class="ref-heading">Overview</div>
+      <div class="ref-row"><div class="ref-key">Structure</div><div class="ref-val">4 zones from dentin-pulp junction inward: Odontoblast → Cell-free → Cell-rich → Pulp core</div></div>
     </div>
-    <div class="ref-section">
-      <div class="ref-heading">1. Odontoblast Zone</div>
-      <div class="ref-row"><div class="ref-key">Location</div><div class="ref-val">Peripheral layer, closely related to the predentin.</div></div>
-      <div class="ref-row"><div class="ref-key">Cell Structure</div><div class="ref-val">Basally located nucleus, supranuclear rough ER and golgi apparatus. Mitochondria and lysosomes throughout cytoplasm.</div></div>
-      <div class="ref-row"><div class="ref-key">Function</div><div class="ref-val">Produce/secrete extracellular matrix of predentine (major protein: Type I Collagen) and bio-mineralization of dentine. Rate reduces with age.</div></div>
-      <div class="ref-row"><div class="ref-key">Process</div><div class="ref-val">Extends from cell body up till the DEJ (Dentinoenamel Junction), contained in a dentinal tubule. Has multiple lateral processes.</div></div>
+    <div class="ref-section"><div class="ref-heading">1. Odontoblast Zone</div>
+      <div class="ref-row"><div class="ref-key">Location</div><div class="ref-val">Peripheral; adjacent to predentin</div></div>
+      <div class="ref-row"><div class="ref-key">Function</div><div class="ref-val">Secretes Type I Collagen (predentin matrix) → mineralizes to dentin. Rate reduces with age.</div></div>
+      <div class="ref-row"><div class="ref-key">Process</div><div class="ref-val">Extends from cell body to DEJ (dentinoenamel junction) in dentinal tubule, with lateral processes</div></div>
     </div>
-    <div class="ref-section">
-      <div class="ref-heading">2. Cell-Free Zone (Weil)</div>
-      <div class="ref-row"><div class="ref-key">Location</div><div class="ref-val">Below the odontoblast layer; prominent in the coronal pulp.</div></div>
-      <div class="ref-row"><div class="ref-key">Characteristics</div><div class="ref-val">Nearly devoid of cells, ~40 microns wide.</div></div>
-      <div class="ref-row"><div class="ref-key">Traversed by</div><div class="ref-val">Blood vessels, unmyelinated nerves, and cytoplasmic processes of fibroblasts.</div></div>
+    <div class="ref-section"><div class="ref-heading">2. Cell-Free Zone of Weil</div>
+      <div class="ref-row"><div class="ref-key">Width</div><div class="ref-val">~40 µm; prominent in coronal pulp; may be absent in radicular pulp</div></div>
+      <div class="ref-row"><div class="ref-key">Traversed by</div><div class="ref-val">Blood vessels, unmyelinated nerves, fibroblast cytoplasmic processes</div></div>
     </div>
-    <div class="ref-section">
-      <div class="ref-heading">3. Cell-Rich Zone</div>
-      <div class="ref-row"><div class="ref-key">Location</div><div class="ref-val">Beneath the cell-free zone; prominent in the coronal pulp.</div></div>
-      <div class="ref-row"><div class="ref-key">Characteristics</div><div class="ref-val">Presence of major nerves/vessels. Discernible due to higher density of fibroblasts than the pulp proper.</div></div>
-      <div class="ref-row"><div class="ref-key">Contents</div><div class="ref-val">Fibroblasts, undifferentiated mesenchymal cells, defense cells (macrophages, lymphocytes), blood capillaries, nerves.</div></div>
+    <div class="ref-section"><div class="ref-heading">3. Cell-Rich Zone</div>
+      <div class="ref-row"><div class="ref-key">Contents</div><div class="ref-val">Fibroblasts (high density), undifferentiated mesenchymal cells, macrophages, lymphocytes, capillaries, nerves</div></div>
     </div>
-    <div class="ref-section">
-      <div class="ref-heading">4. Pulp Core</div>
-      <div class="ref-row"><div class="ref-key">Location</div><div class="ref-val">The central connective tissue mass (pulp proper).</div></div>
-      <div class="ref-row"><div class="ref-key">Contents</div><div class="ref-val">Fibroblasts (most abundant cell type), larger blood vessels, nerves, undifferentiated mesenchymal cells, collagen-fiber bundles.</div></div>
-      <div class="ref-row"><div class="ref-key">Defense Cells</div><div class="ref-val">Macrophages are frequently located in the perivascular area (around vessels).</div></div>
+    <div class="ref-section"><div class="ref-heading">4. Pulp Core (Pulp Proper)</div>
+      <div class="ref-row"><div class="ref-key">Contents</div><div class="ref-val">Fibroblasts (most abundant), larger vessels, nerves, undifferentiated cells, collagen bundles</div></div>
+      <div class="ref-row"><div class="ref-key">Defense cells</div><div class="ref-val">Macrophages in perivascular areas</div></div>
     </div>
   </div>
 
+  <!-- NOSE -->
+  <div id="ref-nose" class="topic-content">
+    <div class="ref-section"><div class="ref-heading">Parts of Lateral Wall</div>
+      <div class="ref-row"><div class="ref-key">Vestibule</div><div class="ref-val">Anterior depressed area · lined by modified skin with vibrissae (short curved hairs)</div></div>
+      <div class="ref-row"><div class="ref-key">Atrium</div><div class="ref-val">Middle part, known as atrium of the middle meatus</div></div>
+      <div class="ref-row"><div class="ref-key">Conchae region</div><div class="ref-val">Posterior part containing 3 conchae; spaces between them = meatuses</div></div>
+    </div>
+    <div class="ref-section"><div class="ref-heading">Formation of Lateral Wall</div>
+      <div class="ref-row"><div class="ref-key">Bony part (7 bones)</div><div class="ref-val">Nasal · Frontal process of maxilla · Lacrimal · Labyrinth of ethmoid (sup & mid conchae) · Inferior nasal concha · Perpendicular plate of palatine bone · Medial pterygoid plate</div></div>
+      <div class="ref-row"><div class="ref-key">Cartilaginous part</div><div class="ref-val">Superior nasal cartilage · Inferior nasal cartilage · 3–4 small ala cartilages</div></div>
+      <div class="ref-row"><div class="ref-key">Cuticular lower part</div><div class="ref-val">Fibrofatty tissue covered with skin</div></div>
+    </div>
+    <div class="ref-section"><div class="ref-heading">Nasal Conchae</div>
+      <div class="ref-row"><div class="ref-key">Inferior concha</div><div class="ref-val">Independent bone (not ethmoid)</div></div>
+      <div class="ref-row"><div class="ref-key">Middle concha</div><div class="ref-val">Projection from medial surface of ethmoidal labyrinth</div></div>
+      <div class="ref-row"><div class="ref-key">Superior concha</div><div class="ref-val">Smallest · projection from medial ethmoidal labyrinth · above posterior part of middle concha</div></div>
+    </div>
+    <div class="ref-section"><div class="ref-heading">Meatuses</div>
+      <div class="ref-row"><div class="ref-key">Inferior meatus</div><div class="ref-val">Largest · nasolacrimal duct opens here</div></div>
+      <div class="ref-row"><div class="ref-key">Middle meatus</div><div class="ref-val">Contains: ethmoidal bulla (mid ethmoid opens at upper margin) · hiatus semilunaris (deep semicircular sulcus below bulla) · infundibulum (short passage at anterior end of hiatus). Opens: frontal sinus (ant hiatus) · ant ethmoidal sinus · maxillary sinus (post hiatus semilunaris)</div></div>
+      <div class="ref-row"><div class="ref-key">Superior meatus</div><div class="ref-val">Shortest and shallowest · receives posterior ethmoidal air sinuses</div></div>
+      <div class="ref-row"><div class="ref-key">Sphenoethmoidal recess</div><div class="ref-val">Triangular fossa above superior concha · receives opening of sphenoidal air sinus</div></div>
+    </div>
+    <div class="ref-section"><div class="ref-heading">Arterial Supply (4 Quadrants)</div>
+      <div class="ref-row"><div class="ref-key">Anterosuperior</div><div class="ref-val">Anterior ethmoidal artery (+ posterior ethmoidal assists)</div></div>
+      <div class="ref-row"><div class="ref-key">Anteroinferior</div><div class="ref-val">Facial artery branches</div></div>
+      <div class="ref-row"><div class="ref-key">Posterosuperior</div><div class="ref-val">Sphenopalatine artery branches</div></div>
+      <div class="ref-row"><div class="ref-key">Posteroinferior</div><div class="ref-val">Greater palatine artery → pierces perpendicular plate of palatine → up through incisive fossa</div></div>
+    </div>
+    <div class="ref-section"><div class="ref-heading">Venous Drainage</div>
+      <div class="ref-row"><div class="ref-key">Drainage</div><div class="ref-val">Plexus → anteriorly to facial vein · posteriorly to pharyngeal plexus · middle part to pterygoid plexus</div></div>
+    </div>
+    <div class="ref-section"><div class="ref-heading">Nerve Supply (4 Quadrants)</div>
+      <div class="ref-row"><div class="ref-key">Anterosuperior</div><div class="ref-val">Anterior ethmoidal nerve (branch of ophthalmic CN V1)</div></div>
+      <div class="ref-row"><div class="ref-key">Anteroinferior</div><div class="ref-val">Anterior superior alveolar nerve (branch of infraorbital → continuation of maxillary nerve CN V2)</div></div>
+      <div class="ref-row"><div class="ref-key">Posterosuperior</div><div class="ref-val">Lateral posterior superior nasal branches from pterygopalatine ganglion</div></div>
+      <div class="ref-row"><div class="ref-key">Posteroinferior</div><div class="ref-val">Anterior palatine branch from pterygopalatine ganglion</div></div>
+      <div class="ref-row"><div class="ref-key">Special sensory</div><div class="ref-val">Olfactory nerves → upper lateral wall below cribriform plate up to superior concha</div></div>
+    </div>
+    <div class="ref-section"><div class="ref-heading">Lymphatic Drainage</div>
+      <div class="ref-row"><div class="ref-key">Anterior half</div><div class="ref-val">→ Submandibular nodes</div></div>
+      <div class="ref-row"><div class="ref-key">Posterior half</div><div class="ref-val">→ Retropharyngeal and upper deep cervical nodes</div></div>
+    </div>
+  </div>
 </div>
 
 <script>
-/* ══════════════════════════════════════
-   DATA STORE (Multi-Topic)
-══════════════════════════════════════ */
+/* ══════════════════════
+   DATA
+══════════════════════ */
 const APP_DATA = {
   cnv3: {
     title: "CN V3 — Mandibular Nerve",
     hasDiagram: true,
     flashcards: [
-      {q:"What type of nerve is CN V3?", a:"Mixed nerve — motor, sensory and autonomic fibers.", cat:"Overview"},
-      {q:"Where does the sensory root of CN V3 originate?", a:"Trigeminal ganglion of Gasser", cat:"Overview"},
-      {q:"Where does the motor root of CN V3 originate?", a:"Motor nucleus of the trigeminal nerve (CN V)", cat:"Overview"},
-      {q:"Through which foramen does CN V3 exit the skull?", a:"Foramen ovale", cat:"Overview"},
-      {q:"What region does CN V3 enter after the skull?", a:"Infratemporal fossa", cat:"Overview"},
-      {q:"What are the two main divisions of CN V3?", a:"Anterior division (smaller, mostly motor) and posterior division (larger, mostly sensory)", cat:"Overview"},
-      {q:"What is the sensory territory of CN V3?", a:"Lower ⅓ of face, lower lip, mandible, preauricular/temporal areas, anterior ⅔ of tongue, cheek, dura of middle cranial fossa", cat:"Overview"},
-      {q:"Which muscles does CN V3 motor fibers supply?", a:"Masticatory muscles (masseter, temporalis, pterygoids), mylohyoid, anterior belly of digastric, tensor tympani, tensor veli palatini", cat:"Overview"},
-      {q:"All muscles supplied by CN V3 originate from which pharyngeal arch?", a:"First pharyngeal arch", cat:"Overview"},
-      {q:"What is the meningeal branch of CN V3 also called?", a:"Nervus spinosus", cat:"Direct branches"},
-      {q:"Through which foramen does the meningeal branch re-enter the skull?", a:"Foramen spinosum", cat:"Direct branches"},
-      {q:"What artery does the meningeal branch accompany inside the skull?", a:"Middle meningeal artery", cat:"Direct branches"},
-      {q:"What does the meningeal branch innervate?", a:"Dura mater of the middle cranial fossa", cat:"Direct branches"},
-      {q:"When does the nerve to medial pterygoid branch off CN V3?", a:"After the meningeal branch, prior to bifurcation into anterior/posterior divisions", cat:"Direct branches"},
-      {q:"Besides medial pterygoid, what does the nerve to medial pterygoid also innervate?", a:"Tensor tympani and tensor veli palatini", cat:"Direct branches"},
-      {q:"How many branches does the anterior division give off? Name them.", a:"Four: buccal nerve (sensory), masseteric nerve, deep temporal nerves, nerve to lateral pterygoid (all motor)", cat:"Anterior division"},
-      {q:"Which is the only sensory branch of the anterior division?", a:"Buccal nerve", cat:"Anterior division"},
-      {q:"What does the buccal nerve innervate?", a:"Skin of the cheek and buccal mucosa", cat:"Anterior division"},
-      {q:"With which nerve does the buccal nerve anastomose?", a:"Buccal branches of the facial nerve (CN VII)", cat:"Anterior division"},
-      {q:"What does the masseteric nerve innervate?", a:"Masseter muscle; also gives a branch to the temporomandibular joint (TMJ)", cat:"Anterior division"},
-      {q:"How many branches do the deep temporal nerves have and what do they innervate?", a:"Two branches (anterior and posterior) — both innervate the temporalis muscle", cat:"Anterior division"},
-      {q:"Name the 3 branches of the posterior division.", a:"Auriculotemporal nerve, lingual nerve, inferior alveolar nerve", cat:"Posterior division"},
-      {q:"What do the two roots of the auriculotemporal nerve encircle?", a:"Middle meningeal artery", cat:"Posterior division"},
-      {q:"Which cranial nerve provides parasympathetic fibers to the parotid gland via the auriculotemporal nerve?", a:"Glossopharyngeal nerve (CN IX)", cat:"Posterior division"},
-      {q:"Which ganglion do the parasympathetic fibers for the parotid synapse in?", a:"Otic ganglion", cat:"Posterior division"},
-      {q:"What sensory areas does the auriculotemporal nerve supply?", a:"Tragus (anterior auricle), external acoustic meatus, tympanic membrane (external surface), posterior temporal skin", cat:"Posterior division"},
-      {q:"What nerve joins the lingual nerve in the infratemporal fossa?", a:"Chorda tympani (a branch of CN VII)", cat:"Posterior division"},
-      {q:"What does the lingual nerve innervate?", a:"Sensory: anterior ⅔ of tongue, floor of oral cavity, mandibular gingiva", cat:"Posterior division"},
-      {q:"What two motor branches does the inferior alveolar nerve give off before entering the mandibular foramen?", a:"Nerve to mylohyoid and branch to anterior belly of digastric", cat:"Posterior division"},
-      {q:"What is the terminal branch of the inferior alveolar nerve?", a:"Mental nerve — exits mental foramen to innervate the lower lip", cat:"Posterior division"},
-      {q:"Which canal does the inferior alveolar nerve travel through?", a:"Mandibular canal (inside the mandible)", cat:"Posterior division"},
-      {q:"What does the mental nerve innervate and where does it exit?", a:"Innervates the lower lip; exits through the mental foramen", cat:"Posterior division"}
+      {q:"What type of nerve is CN V3?",a:"Mixed nerve — motor, sensory and autonomic fibers.",cat:"Overview"},
+      {q:"Where does the sensory root of CN V3 originate?",a:"Trigeminal ganglion of Gasser",cat:"Overview"},
+      {q:"Where does the motor root of CN V3 originate?",a:"Motor nucleus of the trigeminal nerve",cat:"Overview"},
+      {q:"Through which foramen does CN V3 exit the skull?",a:"Foramen ovale",cat:"Overview"},
+      {q:"What region does CN V3 enter after the skull?",a:"Infratemporal fossa",cat:"Overview"},
+      {q:"What are the two main divisions of CN V3?",a:"Anterior (smaller, mostly motor) and Posterior (larger, mostly sensory)",cat:"Overview"},
+      {q:"What is the sensory territory of CN V3?",a:"Lower ⅓ face, lower lip, mandible, temporal/preauricular, ant ⅔ tongue, cheek, dura of middle cranial fossa",cat:"Overview"},
+      {q:"Which muscles does CN V3 motor fibers supply?",a:"Masticatory muscles, mylohyoid, ant belly of digastric, tensor tympani, tensor veli palatini",cat:"Overview"},
+      {q:"All CN V3 motor muscles originate from which arch?",a:"First pharyngeal arch",cat:"Overview"},
+      {q:"What is the meningeal branch of CN V3 also called?",a:"Nervus spinosus",cat:"Branches"},
+      {q:"Through which foramen does the meningeal branch re-enter the skull?",a:"Foramen spinosum",cat:"Branches"},
+      {q:"What does the meningeal branch innervate?",a:"Dura mater of the middle cranial fossa",cat:"Branches"},
+      {q:"Besides medial pterygoid, what does the nerve to medial pterygoid innervate?",a:"Tensor tympani and tensor veli palatini",cat:"Branches"},
+      {q:"Which is the only sensory branch of the anterior division?",a:"Buccal nerve",cat:"Branches"},
+      {q:"What does the buccal nerve innervate?",a:"Skin of the cheek and buccal mucosa",cat:"Branches"},
+      {q:"What does the masseteric nerve innervate?",a:"Masseter muscle + branch to TMJ",cat:"Branches"},
+      {q:"What do the deep temporal nerves innervate?",a:"Temporalis muscle (anterior and posterior branches)",cat:"Branches"},
+      {q:"Name the 3 branches of the posterior division.",a:"Auriculotemporal nerve, lingual nerve, inferior alveolar nerve",cat:"Branches"},
+      {q:"The two roots of the auriculotemporal nerve encircle which artery?",a:"Middle meningeal artery",cat:"Branches"},
+      {q:"Which ganglion relays parasympathetics to the parotid gland?",a:"Otic ganglion (from CN IX)",cat:"Branches"},
+      {q:"What nerve joins the lingual nerve in the infratemporal fossa?",a:"Chorda tympani (branch of CN VII)",cat:"Branches"},
+      {q:"What does the lingual nerve innervate?",a:"Anterior ⅔ of tongue, floor of mouth, mandibular gingiva (sensory)",cat:"Branches"},
+      {q:"What is the terminal branch of the inferior alveolar nerve?",a:"Mental nerve — exits mental foramen → lower lip",cat:"Branches"},
+      {q:"What motor branches arise from the inferior alveolar nerve?",a:"Nerve to mylohyoid and branch to anterior belly of digastric",cat:"Branches"},
     ],
     fitb: [
-      { q: "The structure labelled <em>Trigeminal ganglion</em> is also called the ganglion of ___.", blank: "Gasser", opts: ["Gasser","Otic","Scarpa","Geniculate"], note: "The trigeminal ganglion is also known as the ganglion of Gasser or semilunar ganglion." },
-      { q: "The <em>Mandibular nerve</em> exits the skull through the ___.", blank: "foramen ovale", opts: ["foramen ovale","foramen spinosum","foramen rotundum","jugular foramen"], note: "CN V3 exits via the foramen ovale — V1 uses superior orbital fissure, V2 uses foramen rotundum." },
-      { q: "The <em>Meningeal branch of mandibular nerve</em> re-enters the skull through the ___.", blank: "foramen spinosum", opts: ["foramen spinosum","foramen ovale","foramen lacerum","stylomastoid foramen"], note: "The meningeal branch (nervus spinosus) re-enters via foramen spinosum to innervate the dura." },
-      { q: "The <em>Meningeal branch</em> accompanies which artery inside the skull?", blank: "middle meningeal artery", opts: ["middle meningeal artery","anterior meningeal artery","posterior meningeal artery","basilar artery"], note: "In the diagram, middle meningeal artery is labelled — the meningeal branch of CN V3 follows it." },
-      { q: "The <em>Nerve to medial pterygoid muscle</em> also innervates tensor tympani and ___.", blank: "tensor veli palatini", opts: ["tensor veli palatini","buccinator","palatoglossus","levator veli palatini"], note: "The nerve penetrates the medial pterygoid to reach both tensor muscles." },
-      { q: "The <em>Buccal nerve</em> is the only ___ branch of the anterior division.", blank: "sensory", opts: ["sensory","motor","parasympathetic","sympathetic"], note: "The other 3 anterior division branches (masseteric, deep temporal, N. to lat. pterygoid) are motor." },
-      { q: "The <em>Masseteric nerve</em> also gives a branch to the ___.", blank: "temporomandibular joint", opts: ["temporomandibular joint","parotid gland","buccinator","hyoglossus"], note: "The masseteric nerve passes anterior to the TMJ and supplies it before entering the masseter." },
-      { q: "The <em>Auriculotemporal nerve</em> carries parasympathetic fibres destined for the ___.", blank: "parotid gland", opts: ["parotid gland","submandibular gland","sublingual gland","lacrimal gland"], note: "Post-ganglionic fibres from the otic ganglion (CN IX origin) travel with the auriculotemporal nerve to the parotid." },
-      { q: "Which ganglion relays parasympathetic fibres to the parotid gland via the auriculotemporal nerve?", blank: "otic ganglion", opts: ["otic ganglion","pterygopalatine ganglion","submandibular ganglion","ciliary ganglion"], note: "CN IX preganglionic fibres synapse in the otic ganglion → post-ganglionic via auriculotemporal → parotid." },
-      { q: "The <em>Lingual nerve</em> is joined by the ___ (a branch of CN VII) in the infratemporal fossa.", blank: "chorda tympani", opts: ["chorda tympani","greater petrosal nerve","nerve to stapedius","auricular branch"], note: "Chorda tympani carries taste from anterior ⅔ tongue and parasympathetics to submandibular/sublingual glands." },
-      { q: "The <em>Lingual nerve</em> provides sensory innervation to the anterior ___ of the tongue.", blank: "⅔", opts: ["⅔","⅓","½","¼"], note: "Posterior ⅓ of tongue is innervated by CN IX (glossopharyngeal nerve)." },
-      { q: "The <em>Inferior alveolar nerve</em> travels through the ___.", blank: "mandibular canal", opts: ["mandibular canal","pterygoid canal","palatine canal","infraorbital canal"], note: "The inferior alveolar nerve enters the mandibular foramen and traverses the mandibular canal." },
-      { q: "The terminal branch of the inferior alveolar nerve is the ___, which exits through the mental foramen.", blank: "mental nerve", opts: ["mental nerve","buccal nerve","lingual nerve","masseteric nerve"], note: "The mental nerve is the terminal branch — it innervates the lower lip and chin skin." },
-      { q: "The <em>Nerve to mylohyoid muscle</em> is given off by the inferior alveolar nerve ___ it enters the mandibular foramen.", blank: "before", opts: ["before","after","as","inside"], note: "The nerve to mylohyoid arises just prior to the inferior alveolar nerve entering the foramen." },
-      { q: "The nerve to mylohyoid also gives a branch to the anterior belly of the ___ muscle.", blank: "digastric", opts: ["digastric","geniohyoid","stylohyoid","omohyoid"], note: "CN V3 supplies the anterior belly; the posterior belly of digastric is supplied by CN VII." },
-      { q: "In the diagram, the <em>Posterior branch of lingual nerve to submandibular ganglion</em> means the lingual nerve carries ___ fibres to the submandibular gland.", blank: "parasympathetic", opts: ["parasympathetic","sympathetic","motor","proprioceptive"], note: "The chorda tympani (within lingual nerve) carries pre-ganglionic parasympathetics → submandibular ganglion → gland." },
-      { q: "The <em>Ophthalmic nerve</em> visible at top-right of the diagram is division ___ of the trigeminal nerve.", blank: "V1", opts: ["V1","V2","V3","V4"], note: "CN V1 (ophthalmic), CN V2 (maxillary), CN V3 (mandibular) — all arising from the trigeminal ganglion." },
-      { q: "The <em>Maxillary nerve</em> in the diagram is CN ___.", blank: "V2", opts: ["V2","V1","V3","VII"], note: "CN V2 (maxillary nerve) exits via foramen rotundum and innervates the middle ⅓ of the face." },
-      { q: "The two roots of the auriculotemporal nerve encircle the ___.", blank: "middle meningeal artery", opts: ["middle meningeal artery","maxillary artery","inferior alveolar artery","facial artery"], note: "This encircling arrangement is a classic anatomical landmark for the auriculotemporal nerve." },
-      { q: "The <em>Anterior division of mandibular nerve</em> is ___ than the posterior division.", blank: "smaller", opts: ["smaller","larger","the same size as","always absent in"], note: "The anterior division is the smaller division and is mostly motor; posterior is larger and mostly sensory." }
+      {q:"The trigeminal ganglion is also called the ganglion of ___.",blank:"Gasser",opts:["Gasser","Otic","Scarpa","Geniculate"],note:"Also known as the ganglion of Gasser or semilunar ganglion."},
+      {q:"CN V3 exits the skull through the ___.",blank:"foramen ovale",opts:["foramen ovale","foramen spinosum","foramen rotundum","jugular foramen"],note:"V1 uses superior orbital fissure, V2 uses foramen rotundum, V3 uses foramen ovale."},
+      {q:"The meningeal branch (nervus spinosus) re-enters the skull through the ___.",blank:"foramen spinosum",opts:["foramen spinosum","foramen ovale","foramen lacerum","stylomastoid foramen"],note:"Named 'spinosus' because it re-enters via foramen spinosum."},
+      {q:"The meningeal branch accompanies the ___ inside the skull.",blank:"middle meningeal artery",opts:["middle meningeal artery","anterior meningeal artery","basilar artery","facial artery"],note:"The meningeal branch follows the middle meningeal artery to innervate the dura."},
+      {q:"The nerve to medial pterygoid also innervates tensor tympani and ___.",blank:"tensor veli palatini",opts:["tensor veli palatini","buccinator","palatoglossus","levator veli palatini"],note:"The nerve penetrates medial pterygoid to reach both tensor muscles."},
+      {q:"The buccal nerve is the only ___ branch of the anterior division of CN V3.",blank:"sensory",opts:["sensory","motor","parasympathetic","sympathetic"],note:"The other 3 anterior division branches — masseteric, deep temporal, N. to lateral pterygoid — are all motor."},
+      {q:"The auriculotemporal nerve carries parasympathetics to the ___.",blank:"parotid gland",opts:["parotid gland","submandibular gland","sublingual gland","lacrimal gland"],note:"Post-ganglionic fibres from otic ganglion (CN IX) travel via auriculotemporal nerve to the parotid."},
+      {q:"The lingual nerve is joined by the ___, a branch of CN VII.",blank:"chorda tympani",opts:["chorda tympani","greater petrosal nerve","nerve to stapedius","deep petrosal nerve"],note:"Chorda tympani carries taste from anterior ⅔ tongue + parasympathetics to submandibular/sublingual glands."},
+      {q:"The lingual nerve supplies sensory innervation to the anterior ___ of the tongue.",blank:"⅔",opts:["⅔","⅓","½","¾"],note:"Posterior ⅓ is supplied by CN IX (glossopharyngeal)."},
+      {q:"The inferior alveolar nerve travels through the ___.",blank:"mandibular canal",opts:["mandibular canal","pterygoid canal","palatine canal","infraorbital canal"],note:"It enters the mandibular foramen and runs through the mandibular canal."},
+      {q:"The terminal branch of the inferior alveolar nerve is the ___ nerve.",blank:"mental",opts:["mental","buccal","lingual","masseteric"],note:"Mental nerve exits the mental foramen to supply the lower lip and chin."},
+      {q:"The nerve to mylohyoid is given off ___ the inferior alveolar nerve enters the mandibular foramen.",blank:"before",opts:["before","after","inside","alongside"],note:"It arises just prior to the inferior alveolar nerve entering the mandibular foramen."},
     ]
   },
   pulp: {
     title: "Dental Pulp Zones",
     hasDiagram: false,
     flashcards: [
-      {q: "What are the 4 zones of the pulp cavity from outermost to innermost?", a: "Odontoblast zone, Cell-free zone of Weil, Cell-rich zone, Pulp core.", cat: "Overview"},
-      {q: "Which pulp cells are found in the peripheral layer closely related to the predentin?", a: "Odontoblasts.", cat: "Odontoblast Zone"},
-      {q: "What is the major function of odontoblasts?", a: "To produce and secrete extracellular matrix of the predentine and bio-mineralization of the dentine.", cat: "Odontoblast Zone"},
-      {q: "What is the major protein secreted by odontoblasts?", a: "Type I Collagen.", cat: "Odontoblast Zone"},
-      {q: "Where does the odontoblastic process extend?", a: "From the cell body up till the Dentinoenamel Junction (DEJ), contained in a dentinal tubule.", cat: "Odontoblast Zone"},
-      {q: "What is the cell-free zone also known as?", a: "Basal layer of Weil.", cat: "Cell-Free Zone"},
-      {q: "Where is the cell-free zone of Weil most prominent?", a: "In the coronal pulp.", cat: "Cell-Free Zone"},
-      {q: "What traverses the cell-free zone?", a: "Blood vessels, unmyelinated nerves, and cytoplasmic processes of fibroblasts.", cat: "Cell-Free Zone"},
-      {q: "What characterizes the cell-rich zone?", a: "Presence of major nerves and vessels, and a higher density of fibroblasts than the pulp proper.", cat: "Cell-Rich Zone"},
-      {q: "What cells are found in the cell-rich zone?", a: "Fibroblasts, undifferentiated mesenchymal cells, and defense cells (macrophages/lymphocytes).", cat: "Cell-Rich Zone"},
-      {q: "What is the central connective tissue mass of the pulp called?", a: "Pulp proper or pulp core.", cat: "Pulp Core"},
-      {q: "What is the most abundant cell type in the pulp core?", a: "Fibroblasts.", cat: "Pulp Core"},
-      {q: "Where are defense cells like macrophages frequently located in the pulp core?", a: "In the perivascular area (around the blood vessels).", cat: "Pulp Core"}
+      {q:"What are the 4 zones of the pulp from outer to inner?",a:"Odontoblast zone → Cell-free zone of Weil → Cell-rich zone → Pulp core",cat:"Overview"},
+      {q:"Which pulp zone is the outermost, adjacent to predentin?",a:"Odontoblast zone",cat:"Odontoblast Zone"},
+      {q:"What is the major function of odontoblasts?",a:"Produce and secrete predentin matrix (Type I Collagen) and mineralise it to form dentin",cat:"Odontoblast Zone"},
+      {q:"What protein do odontoblasts mainly secrete?",a:"Type I Collagen",cat:"Odontoblast Zone"},
+      {q:"Where does the odontoblastic process extend to?",a:"From the cell body to the DEJ (dentinoenamel junction), inside a dentinal tubule",cat:"Odontoblast Zone"},
+      {q:"What organelles are in the supranuclear region of an odontoblast?",a:"Rough ER and Golgi apparatus",cat:"Odontoblast Zone"},
+      {q:"What is the cell-free zone also called?",a:"Basal layer of Weil",cat:"Cell-Free Zone"},
+      {q:"Approximately how wide is the cell-free zone of Weil?",a:"About 40 microns (µm)",cat:"Cell-Free Zone"},
+      {q:"Where is the cell-free zone most prominent?",a:"In the coronal pulp",cat:"Cell-Free Zone"},
+      {q:"What structures traverse the cell-free zone?",a:"Blood vessels, unmyelinated nerves, and cytoplasmic processes of fibroblasts",cat:"Cell-Free Zone"},
+      {q:"What distinguishes the cell-rich zone from the pulp proper?",a:"Higher density of fibroblasts than the pulp proper (presence of major nerves and vessels)",cat:"Cell-Rich Zone"},
+      {q:"Name all cell types found in the cell-rich zone.",a:"Fibroblasts, undifferentiated mesenchymal cells, macrophages, lymphocytes",cat:"Cell-Rich Zone"},
+      {q:"What is the central connective tissue mass of the pulp called?",a:"Pulp core or pulp proper",cat:"Pulp Core"},
+      {q:"What is the most abundant cell type in the pulp core?",a:"Fibroblasts",cat:"Pulp Core"},
+      {q:"Where are macrophages frequently located in the pulp core?",a:"In the perivascular area (around blood vessels)",cat:"Pulp Core"},
     ],
     fitb: [
-      { q: "The dental pulp exhibits ___ zones as you progress from the dentin-pulp junction toward the center.", blank: "four", opts: ["four", "three", "five", "two"], note: "Odontoblast, Cell-free, Cell-rich, and Pulp core." },
-      { q: "Odontoblasts have a process extending up till the ___ contained in a dentinal tubule.", blank: "DEJ", opts: ["DEJ", "CEJ", "Pulp core", "Apex"], note: "DEJ stands for Dentinoenamel Junction." },
-      { q: "The major protein secreted by odontoblasts is Type I ___.", blank: "Collagen", opts: ["Collagen", "Elastin", "Keratin", "Fibronectin"], note: "Type I collagen forms the major organic matrix of dentin." },
-      { q: "The Cell-free zone is also known as the basal layer of ___.", blank: "Weil", opts: ["Weil", "Korff", "Ebner", "Tomes"], note: "Named after Victor von Weil." },
-      { q: "The cell-free zone of Weil is prominent in the ___ pulp.", blank: "coronal", opts: ["coronal", "radicular", "apical", "cervical"], note: "It is often absent or very thin in the root pulp." },
-      { q: "The zone beneath the cell-free zone is the ___ zone.", blank: "Cell-rich", opts: ["Cell-rich", "Odontoblast", "Pulp core", "Acellular"], note: "Characterized by a high density of fibroblasts." },
-      { q: "The central connective tissue mass is known as the pulp proper or pulp ___.", blank: "core", opts: ["core", "chamber", "horn", "matrix"], note: "The innermost zone containing larger vessels and nerves." },
-      { q: "In the pulp core, defense cells like macrophages are frequently located in the ___ area.", blank: "perivascular", opts: ["perivascular", "peripheral", "subodontoblastic", "intercellular"], note: "Perivascular means around the blood vessels." }
+      {q:"The dental pulp exhibits ___ distinct zones from the dentin-pulp junction inward.",blank:"four",opts:["four","three","five","two"],note:"Odontoblast, Cell-free (Weil), Cell-rich, and Pulp core."},
+      {q:"The odontoblastic process is contained in a dentinal tubule and extends to the ___.",blank:"DEJ",opts:["DEJ","CEJ","Apex","Pulp core"],note:"DEJ = Dentinoenamel Junction."},
+      {q:"The major protein secreted by odontoblasts is Type I ___.",blank:"Collagen",opts:["Collagen","Elastin","Keratin","Fibronectin"],note:"Type I collagen forms the major organic matrix of predentin/dentin."},
+      {q:"The cell-free zone is also known as the basal layer of ___.",blank:"Weil",opts:["Weil","Korff","Ebner","Tomes"],note:"Named after Victor von Weil."},
+      {q:"The cell-free zone of Weil is most prominent in the ___ pulp.",blank:"coronal",opts:["coronal","radicular","apical","cervical"],note:"Often absent or very thin in the root/radicular pulp."},
+      {q:"The zone with the highest density of fibroblasts (compared to pulp proper) is the ___ zone.",blank:"cell-rich",opts:["cell-rich","cell-free","odontoblast","pulp core"],note:"The cell-rich zone has more fibroblasts per unit area than the pulp proper."},
+      {q:"The most abundant cell type in the pulp core is ___.",blank:"fibroblasts",opts:["fibroblasts","odontoblasts","macrophages","lymphocytes"],note:"Fibroblasts maintain the connective tissue matrix of the pulp."},
+      {q:"Macrophages in the pulp core are frequently found in the ___ area.",blank:"perivascular",opts:["perivascular","peripheral","subodontoblastic","intercellular"],note:"Perivascular = around blood vessels."},
+    ]
+  },
+  nose: {
+    title: "Lateral Wall of Nose",
+    hasDiagram: false,
+    flashcards: [
+      {q:"What makes the lateral wall of the nose irregular?",a:"Three shelf-like bony projections called conchae",cat:"Overview"},
+      {q:"What is the function of the conchae?",a:"Increase surface area of the nose for effective air-conditioning of inspired air",cat:"Overview"},
+      {q:"Name the 3 parts of the lateral wall from anterior to posterior.",a:"Vestibule (anterior) → Atrium of middle meatus (middle) → Conchae region with meatuses (posterior)",cat:"Parts"},
+      {q:"What is the vestibule of the nose lined by?",a:"Modified skin containing short, stiff, curved hairs called vibrissae",cat:"Parts"},
+      {q:"What is the middle part of the lateral wall called?",a:"Atrium of the middle meatus",cat:"Parts"},
+      {q:"What are meatuses?",a:"Passages beneath the overhanging conchae that communicate freely with the nasal cavity proper",cat:"Parts"},
+      {q:"What are the 3 components of the formation of the lateral wall?",a:"Bony part, Cartilaginous part, Cuticular lower part",cat:"Formation"},
+      {q:"Name the 7 bones forming the bony part of the lateral wall (anterior to posterior).",a:"Nasal · Frontal process of maxilla · Lacrimal · Labyrinth of ethmoid · Inferior nasal concha · Perpendicular plate of palatine bone · Medial pterygoid plate",cat:"Formation"},
+      {q:"What are the 3 components of the cartilaginous part of the lateral wall?",a:"Superior nasal cartilage, Inferior nasal cartilage, 3–4 small cartilages of the ala",cat:"Formation"},
+      {q:"What forms the cuticular lower part of the lateral wall?",a:"Fibrofatty tissue covered with skin",cat:"Formation"},
+      {q:"How many nasal conchae are usually found, and what type of tissue are they?",a:"Three; curved bony projections directed downwards and medially",cat:"Conchae"},
+      {q:"Which concha is an independent bone (not part of ethmoid)?",a:"Inferior concha",cat:"Conchae"},
+      {q:"Where do the middle and superior conchae arise from?",a:"Medial surface of the ethmoidal labyrinth",cat:"Conchae"},
+      {q:"Which is the smallest concha and where is it located?",a:"Superior concha; situated just above the posterior part of the middle concha",cat:"Conchae"},
+      {q:"Which meatus is the largest of the three?",a:"Inferior meatus",cat:"Meatuses"},
+      {q:"What opens into the inferior meatus?",a:"Nasolacrimal duct",cat:"Meatuses"},
+      {q:"What is the ethmoidal bulla?",a:"A rounded elevation produced by the underlying middle ethmoidal sinuses, which open at the upper margin of the bulla",cat:"Meatuses"},
+      {q:"What is the hiatus semilunaris?",a:"A deep semicircular sulcus located below the ethmoidal bulla in the middle meatus",cat:"Meatuses"},
+      {q:"What is the infundibulum?",a:"A short passage at the anterior end of the hiatus semilunaris",cat:"Meatuses"},
+      {q:"Which sinuses open into the middle meatus?",a:"Frontal sinus (ant. hiatus) · Anterior ethmoidal sinus (behind frontal opening) · Maxillary sinus (posterior hiatus semilunaris)",cat:"Meatuses"},
+      {q:"Which is the shortest and shallowest meatus?",a:"Superior meatus",cat:"Meatuses"},
+      {q:"What opens into the superior meatus?",a:"Posterior ethmoidal air sinuses",cat:"Meatuses"},
+      {q:"What is the sphenoethmoidal recess?",a:"A triangular fossa just above the superior concha that receives the opening of the sphenoidal air sinus",cat:"Meatuses"},
+      {q:"What supplies the anterosuperior quadrant of the lateral wall (artery)?",a:"Anterior ethmoidal artery (assisted by posterior ethmoidal artery)",cat:"Arterial Supply"},
+      {q:"What supplies the anteroinferior quadrant of the lateral wall (artery)?",a:"Branches from the facial artery",cat:"Arterial Supply"},
+      {q:"What supplies the posterosuperior quadrant of the lateral wall (artery)?",a:"Branches from the sphenopalatine artery",cat:"Arterial Supply"},
+      {q:"What supplies the posteroinferior quadrant of the lateral wall (artery)?",a:"Greater palatine artery (pierces perpendicular plate of palatine bone, up through incisive fossa)",cat:"Arterial Supply"},
+      {q:"Which nerve supplies the anterosuperior quadrant of the lateral wall?",a:"Anterior ethmoidal nerve (branch of ophthalmic nerve CN V1)",cat:"Nerve Supply"},
+      {q:"Which nerve supplies the anteroinferior quadrant of the lateral wall?",a:"Anterior superior alveolar nerve (branch of infraorbital → continuation of maxillary nerve CN V2)",cat:"Nerve Supply"},
+      {q:"Which nerve supplies the posterosuperior quadrant of the lateral wall?",a:"Lateral posterior superior nasal branches from the pterygopalatine ganglion",cat:"Nerve Supply"},
+      {q:"Which nerve supplies the posteroinferior quadrant of the lateral wall?",a:"Anterior palatine branch from the pterygopalatine ganglion",cat:"Nerve Supply"},
+      {q:"What are the special sensory nerves of the lateral wall?",a:"Olfactory nerves — distributed to upper lateral wall below the cribriform plate up to superior concha",cat:"Nerve Supply"},
+      {q:"Where do lymphatics from the anterior half of the lateral wall drain?",a:"Submandibular nodes",cat:"Lymphatics"},
+      {q:"Where do lymphatics from the posterior half of the lateral wall drain?",a:"Retropharyngeal and upper deep cervical nodes",cat:"Lymphatics"},
+      {q:"What are the 3 destinations of venous drainage from the lateral wall?",a:"Anteriorly → facial vein · Posteriorly → pharyngeal plexus · Middle → pterygoid plexus",cat:"Lymphatics"},
+    ],
+    fitb: [
+      {q:"The lateral wall of the nose is irregular due to three shelf-like bony projections called ___.",blank:"conchae",opts:["conchae","turbinates","polyps","bulla"],note:"Conchae increase the surface area for air-conditioning."},
+      {q:"The anterior part of the lateral wall is the vestibule, lined by modified skin with short hairs called ___.",blank:"vibrissae",opts:["vibrissae","cilia","microvilli","stereocilia"],note:"Vibrissae filter large particles from inspired air."},
+      {q:"The middle part of the lateral wall is called the ___ of the middle meatus.",blank:"atrium",opts:["atrium","vestibule","bulla","infundibulum"],note:"The atrium is a shallow depression in front of the middle meatus."},
+      {q:"The bony part of the lateral wall is formed by ___ bones from anterior to posterior.",blank:"7",opts:["7","5","4","9"],note:"Nasal, frontal process of maxilla, lacrimal, ethmoid labyrinth, inferior concha, palatine, medial pterygoid plate."},
+      {q:"The inferior nasal concha is an ___ bone, NOT part of the ethmoid.",blank:"independent",opts:["independent","ethmoid","palatine","lacrimal"],note:"Middle and superior conchae are projections of the ethmoidal labyrinth; inferior concha is its own bone."},
+      {q:"The ___ meatus is the largest and receives the nasolacrimal duct.",blank:"inferior",opts:["inferior","middle","superior","sphenoethmoidal"],note:"The nasolacrimal duct drains tears from the eye into the inferior meatus."},
+      {q:"The ethmoidal bulla is a rounded elevation produced by the underlying ___ ethmoidal sinuses.",blank:"middle",opts:["middle","anterior","posterior","superior"],note:"Middle ethmoidal air sinuses bulge the lateral wall to form the ethmoidal bulla."},
+      {q:"The hiatus semilunaris is a deep ___ sulcus located below the ethmoidal bulla.",blank:"semicircular",opts:["semicircular","vertical","horizontal","oblique"],note:"It is the key drainage pathway for frontal, anterior ethmoidal, and maxillary sinuses."},
+      {q:"The ___ sinus opens in the posterior part of the hiatus semilunaris.",blank:"maxillary",opts:["maxillary","frontal","sphenoidal","ethmoidal"],note:"The maxillary sinus is often represented by two openings in the posterior hiatus."},
+      {q:"The superior meatus receives the openings of the ___ ethmoidal air sinuses.",blank:"posterior",opts:["posterior","anterior","middle","all"],note:"Anterior ethmoid opens in middle meatus; posterior ethmoid opens in superior meatus."},
+      {q:"The sphenoethmoidal recess receives the opening of the ___ air sinus.",blank:"sphenoidal",opts:["sphenoidal","frontal","maxillary","ethmoidal"],note:"It is a triangular fossa just above the superior concha."},
+      {q:"The anterosuperior quadrant of the lateral wall is supplied by the ___ artery.",blank:"anterior ethmoidal",opts:["anterior ethmoidal","facial","sphenopalatine","greater palatine"],note:"Assisted by posterior ethmoidal artery. Branch of ophthalmic artery (CN V1 territory)."},
+      {q:"The posterosuperior quadrant is supplied by branches of the ___ artery.",blank:"sphenopalatine",opts:["sphenopalatine","facial","anterior ethmoidal","greater palatine"],note:"Sphenopalatine is a branch of the maxillary artery."},
+      {q:"The anterosuperior quadrant is innervated by the ___ nerve (branch of CN V1).",blank:"anterior ethmoidal",opts:["anterior ethmoidal","buccal","infraorbital","olfactory"],note:"Anterior ethmoidal nerve is a branch of the nasociliary nerve from the ophthalmic division (CN V1)."},
+      {q:"Lymphatics from the posterior half of the lateral wall drain to the ___ and upper deep cervical nodes.",blank:"retropharyngeal",opts:["retropharyngeal","submandibular","parotid","buccal"],note:"Anterior half drains to submandibular nodes."},
     ]
   }
 };
 
-/* ══════════════════════════════════════
-   GLOBAL STATE
-══════════════════════════════════════ */
+/* ══════════════════════
+   STATE
+══════════════════════ */
 let activeTopic = null;
-let fcDeck = [];
-let fcIdx = 0;
-let fcActiveCats = new Set();
-let fitbDeck = [];
-let fitbQ = 0;
-let fitbScore = 0;
-let fitbAnswered = false;
+let fcDeck = [], fcIdx = 0, fcActiveCats = new Set();
+let fitbDeck = [], fitbQ = 0, fitbScore = 0, fitbAnswered = false;
 
-/* ══════════════════════════════════════
-   NAVIGATION & TOPIC SELECTION
-══════════════════════════════════════ */
+/* ══════════════════════
+   NAV
+══════════════════════ */
 function goHome() {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-home').classList.add('active');
   document.getElementById('btn-back').style.display = 'none';
   document.getElementById('study-nav').style.display = 'none';
-  document.getElementById('nav-brand').textContent = "Study App";
+  document.getElementById('nav-brand').textContent = 'Study App';
   activeTopic = null;
 }
 
-function selectTopic(topicId) {
-  activeTopic = topicId;
-  const data = APP_DATA[topicId];
-  
-  // Update Nav
+function selectTopic(id) {
+  activeTopic = id;
+  const data = APP_DATA[id];
   document.getElementById('nav-brand').textContent = data.title;
   document.getElementById('btn-back').style.display = 'block';
   document.getElementById('study-nav').style.display = 'flex';
-  
-  // Toggle topic-specific HTML sections
   document.querySelectorAll('.topic-content').forEach(el => el.classList.remove('active'));
-  if(document.getElementById(`mm-${topicId}`)) document.getElementById(`mm-${topicId}`).classList.add('active');
-  if(document.getElementById(`ref-${topicId}`)) document.getElementById(`ref-${topicId}`).classList.add('active');
-  
-  // Toggle FITB Diagram
+  ['mm','ref'].forEach(prefix => {
+    const el = document.getElementById(`${prefix}-${id}`);
+    if (el) el.classList.add('active');
+  });
   document.getElementById('fitb-diagram').style.display = data.hasDiagram ? 'block' : 'none';
-
-  // Initialize Modules for Topic
   initFlashcards(data.flashcards);
   initFITB(data.fitb);
-  
-  // Go to Flashcards by default
-  showPanel('fc', document.querySelector('#study-nav .nav-btn'));
+  const firstBtn = document.querySelector('#study-nav .nav-btn');
+  document.querySelectorAll('#study-nav .nav-btn').forEach(b => b.classList.remove('active'));
+  firstBtn.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-fc').classList.add('active');
 }
 
-function showPanel(id, btnEl) {
+function showPanel(id, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('#study-nav .nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  if(btnEl) btnEl.classList.add('active');
+  document.getElementById('panel-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
 }
 
-/* ══════════════════════════════════════
+/* ══════════════════════
    FLASHCARDS
-══════════════════════════════════════ */
+══════════════════════ */
 function initFlashcards(cards) {
   fcDeck = [...cards];
   fcActiveCats = new Set(cards.map(c => c.cat));
   fcIdx = 0;
-  
   const el = document.getElementById('fc-cats');
   el.innerHTML = '';
   [...new Set(cards.map(c => c.cat))].forEach(cat => {
     const b = document.createElement('button');
     b.className = 'filter-btn on';
     b.textContent = cat;
-    b.onclick = (e) => { e.stopPropagation(); fcToggleCat(cat, b, cards); };
+    b.onclick = () => fcToggleCat(cat, b, cards);
     el.appendChild(b);
   });
   fcRender();
@@ -984,136 +785,326 @@ function initFlashcards(cards) {
 function fcToggleCat(cat, btn, allCards) {
   if (fcActiveCats.has(cat)) { fcActiveCats.delete(cat); btn.classList.remove('on'); }
   else { fcActiveCats.add(cat); btn.classList.add('on'); }
-  
   fcDeck = allCards.filter(x => fcActiveCats.has(x.cat));
-  if (!fcDeck.length) { 
-    fcDeck = [...allCards]; 
-    // visual reset of buttons not done here for simplicity, but user sees all cards
-  }
+  if (!fcDeck.length) fcDeck = [...allCards];
   fcIdx = 0; fcRender();
 }
 
 function fcRender() {
   document.getElementById('fc-card').classList.remove('flipped');
-  if(!fcDeck.length) return;
+  if (!fcDeck.length) return;
   const c = fcDeck[fcIdx];
   document.getElementById('fc-qtag').textContent = c.cat;
   document.getElementById('fc-qtext').textContent = c.q;
   document.getElementById('fc-atext').textContent = c.a;
-  document.getElementById('fc-prog').textContent = (fcIdx+1) + ' / ' + fcDeck.length;
+  document.getElementById('fc-prog').textContent = (fcIdx + 1) + ' / ' + fcDeck.length;
 }
 
 function fcFlip() { document.getElementById('fc-card').classList.toggle('flipped'); }
-function fcNext() { fcIdx = (fcIdx+1) % fcDeck.length; fcRender(); }
-function fcPrev() { fcIdx = (fcIdx-1+fcDeck.length) % fcDeck.length; fcRender(); }
+function fcNext() { fcIdx = (fcIdx + 1) % fcDeck.length; fcRender(); }
+function fcPrev() { fcIdx = (fcIdx - 1 + fcDeck.length) % fcDeck.length; fcRender(); }
 function fcShuffle() {
-  for (let i=fcDeck.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [fcDeck[i],fcDeck[j]]=[fcDeck[j],fcDeck[i]]; }
-  fcIdx=0; fcRender();
+  for (let i = fcDeck.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [fcDeck[i], fcDeck[j]] = [fcDeck[j], fcDeck[i]]; }
+  fcIdx = 0; fcRender();
 }
 
-/* ══════════════════════════════════════
+/* ══════════════════════
    FILL IN THE BLANK
-══════════════════════════════════════ */
-function initFITB(questions) {
-  fitbDeck = [...questions];
-  fitbRestart();
-}
+══════════════════════ */
+function initFITB(qs) { fitbDeck = [...qs]; fitbRestart(); }
 
 function fitbRender() {
   const game = document.getElementById('fitb-game');
   const result = document.getElementById('fitb-result');
-
   if (fitbQ >= fitbDeck.length) {
-    game.style.display = 'none';
-    result.classList.add('show');
-    const pct = Math.round((fitbScore / fitbDeck.length) * 100);
+    game.style.display = 'none'; result.classList.add('show');
+    const pct = Math.round(fitbScore / fitbDeck.length * 100);
     document.getElementById('result-num').textContent = fitbScore + '/' + fitbDeck.length;
-    let msg = pct >= 80 ? 'Excellent! You know this topic well.' : pct >= 60 ? 'Good effort — review the ones you missed.' : 'Keep studying — you\'ve got this!';
-    document.getElementById('result-msg').textContent = msg;
+    document.getElementById('result-msg').textContent = pct >= 80 ? 'Excellent! You know this topic well.' : pct >= 60 ? 'Good effort — review the ones you missed.' : 'Keep studying — you\'ve got this!';
     return;
   }
-
   const q = fitbDeck[fitbQ];
   fitbAnswered = false;
-
-  const shuffledOpts = [...q.opts].sort(() => Math.random() - 0.5);
-
+  const opts = [...q.opts].sort(() => Math.random() - 0.5);
   document.getElementById('fitb-score').textContent = fitbScore + ' / ' + fitbDeck.length;
   document.getElementById('fitb-prog').style.width = (fitbQ / fitbDeck.length * 100) + '%';
-  document.getElementById('fitb-qnum').textContent = 'Q' + (fitbQ+1);
-
+  document.getElementById('fitb-qnum').textContent = 'Q' + (fitbQ + 1);
   game.innerHTML = `
     <div class="fitb-card">
-      <div class="fitb-prompt">Question ${fitbQ+1} of ${fitbDeck.length}</div>
+      <div class="fitb-prompt">Question ${fitbQ + 1} of ${fitbDeck.length}</div>
       <div class="fitb-q">${q.q.replace('___', '<span class="blank">___</span>')}</div>
       <div class="options-grid" id="opts-grid">
-        ${shuffledOpts.map(o => `<button class="opt-btn" onclick="fitbAnswer(this,'${o.replace(/'/g,"\\'")}','${q.blank.replace(/'/g,"\\'")}','${q.note.replace(/'/g,"\\'")}')">${o}</button>`).join('')}
+        ${opts.map(o => `<button class="opt-btn" onclick="fitbAnswer(this,${JSON.stringify(o)},${JSON.stringify(q.blank)},${JSON.stringify(q.note).replace(/"/g, '&quot;')})">${o}</button>`).join('')}
       </div>
       <div class="fitb-feedback" id="fitb-fb"></div>
     </div>
     <div class="fitb-nav">
       <button id="skip-btn" onclick="fitbSkip()">Skip</button>
       <button class="primary" id="next-btn" onclick="fitbNext()" disabled>Next →</button>
-    </div>
-  `;
+    </div>`;
 }
 
 function fitbAnswer(btn, chosen, correct, note) {
   if (fitbAnswered) return;
   fitbAnswered = true;
-
-  const grid = document.getElementById('opts-grid');
-  const allBtns = grid.querySelectorAll('.opt-btn');
+  const allBtns = document.querySelectorAll('#opts-grid .opt-btn');
   allBtns.forEach(b => b.disabled = true);
-
   const fb = document.getElementById('fitb-fb');
-  const isCorrect = chosen.toLowerCase() === correct.toLowerCase();
-
-  if (isCorrect) {
-    btn.classList.add('correct');
-    fitbScore++;
-    fb.className = 'fitb-feedback show ok';
-    fb.textContent = '✓ Correct! ' + note;
-  } else {
-    btn.classList.add('wrong');
-    allBtns.forEach(b => { if (b.textContent.toLowerCase() === correct.toLowerCase()) b.classList.add('reveal'); });
-    fb.className = 'fitb-feedback show bad';
-    fb.textContent = '✗ The answer is: ' + correct + '. ' + note;
-  }
-
+  const ok = chosen.toLowerCase() === correct.toLowerCase();
+  if (ok) { btn.classList.add('correct'); fitbScore++; fb.className = 'fitb-feedback show ok'; fb.textContent = '✓ Correct! ' + note; }
+  else { btn.classList.add('wrong'); allBtns.forEach(b => { if (b.textContent.toLowerCase() === correct.toLowerCase()) b.classList.add('reveal'); }); fb.className = 'fitb-feedback show bad'; fb.textContent = '✗ Answer: ' + correct + '. ' + note; }
   document.getElementById('fitb-score').textContent = fitbScore + ' / ' + fitbDeck.length;
   document.getElementById('next-btn').disabled = false;
   document.getElementById('skip-btn').disabled = true;
 }
 
 function fitbSkip() {
-  if(fitbAnswered) return;
+  if (fitbAnswered) return;
   fitbAnswered = true;
   const q = fitbDeck[fitbQ];
+  document.querySelectorAll('#opts-grid .opt-btn').forEach(b => { b.disabled = true; if (b.textContent.toLowerCase() === q.blank.toLowerCase()) b.classList.add('reveal'); });
   const fb = document.getElementById('fitb-fb');
-  const grid = document.getElementById('opts-grid');
-  const allBtns = grid.querySelectorAll('.opt-btn');
-  allBtns.forEach(b => { b.disabled = true; if (b.textContent.toLowerCase() === q.blank.toLowerCase()) b.classList.add('reveal'); });
   fb.className = 'fitb-feedback show bad';
   fb.textContent = 'Skipped. Answer: ' + q.blank + '. ' + q.note;
   document.getElementById('next-btn').disabled = false;
   document.getElementById('skip-btn').disabled = true;
 }
 
-function fitbNext() {
-  fitbQ++;
-  fitbRender();
-}
+function fitbNext() { fitbQ++; fitbRender(); }
 
 function fitbRestart() {
-  fitbQ = 0;
-  fitbScore = 0;
-  fitbAnswered = false;
+  fitbQ = 0; fitbScore = 0; fitbAnswered = false;
   document.getElementById('fitb-result').classList.remove('show');
   document.getElementById('fitb-game').style.display = '';
   fitbRender();
 }
 
+
+/* ═════════════════════════════════════
+   MIND MAP INTERACTIVITY & PHYSICS
+═════════════════════════════════════ */
+const mmNodes = [];
+const mmLinks = [];
+let draggedNode = null;
+let dragStartPt = null;
+let nodeStartPos = {x: 0, y: 0};
+let physicsRAF = null;
+
+function initMindmapPhysics() {
+  const svgs = document.querySelectorAll('.mindmap-svg');
+
+  svgs.forEach(svg => {
+    const rects = Array.from(svg.querySelectorAll('rect'));
+    const texts = Array.from(svg.querySelectorAll('text'));
+    const lines = Array.from(svg.querySelectorAll('line'));
+
+    const localNodes = [];
+
+    // 1. Group Rects into Draggable Nodes
+    rects.forEach((rect) => {
+      const rw = parseFloat(rect.getAttribute('width') || 0);
+      const rh = parseFloat(rect.getAttribute('height') || 0);
+      
+      // Filter out backgrounds and spacers
+      if (rw >= 800 || rh === 0) return;
+
+      const rx = parseFloat(rect.getAttribute('x') || 0);
+      const ry = parseFloat(rect.getAttribute('y') || 0);
+      
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.classList.add('mm-node');
+      
+      rect.parentNode.insertBefore(g, rect);
+      g.appendChild(rect);
+
+      localNodes.push({
+        g: g,
+        rect: rect,
+        svg: svg,
+        cx: rx + rw / 2,
+        cy: ry + rh / 2,
+        x: 0, y: 0,
+        vx: 0, vy: 0,
+        isDragging: false
+      });
+    });
+
+    // 2. Attach Text securely to closest parent Node
+    texts.forEach(text => {
+      const tx = parseFloat(text.getAttribute('x') || 0);
+      const ty = parseFloat(text.getAttribute('y') || 0);
+      let bestNode = null;
+      let minD = Infinity;
+
+      localNodes.forEach(n => {
+        const rx = parseFloat(n.rect.getAttribute('x') || 0);
+        const ry = parseFloat(n.rect.getAttribute('y') || 0);
+        const rw = parseFloat(n.rect.getAttribute('width') || 0);
+        const rh = parseFloat(n.rect.getAttribute('height') || 0);
+
+        // Expanded bounding box check to catch text
+        if (tx >= rx - 50 && tx <= rx + rw + 50 && ty >= ry - 50 && ty <= ry + rh + 50) {
+          const dist = Math.hypot(n.cx - tx, n.cy - ty);
+          if (dist < minD) {
+            minD = dist;
+            bestNode = n;
+          }
+        }
+      });
+      // Append text to the grouped node so they move together
+      if (bestNode) {
+        bestNode.g.appendChild(text);
+      }
+    });
+
+    // 3. Attach Events and populate global pool
+    localNodes.forEach(n => {
+      mmNodes.push(n);
+      n.g.addEventListener('mousedown', (e) => startDrag(e, n));
+      n.g.addEventListener('touchstart', (e) => startDrag(e, n), {passive: false});
+    });
+
+    // 4. Map Lines to their connected Nodes
+    lines.forEach(line => {
+      if (line.getAttribute('stroke') === 'none') return; // Ignore invisible structural lines
+
+      const x1 = parseFloat(line.getAttribute('x1'));
+      const y1 = parseFloat(line.getAttribute('y1'));
+      const x2 = parseFloat(line.getAttribute('x2'));
+      const y2 = parseFloat(line.getAttribute('y2'));
+
+      let n1 = null, d1 = Infinity;
+      let n2 = null, d2 = Infinity;
+
+      localNodes.forEach(n => {
+        const dist1 = Math.hypot(n.cx - x1, n.cy - y1);
+        const dist2 = Math.hypot(n.cx - x2, n.cy - y2);
+        if (dist1 < d1) { d1 = dist1; n1 = n; }
+        if (dist2 < d2) { d2 = dist2; n2 = n; }
+      });
+
+      mmLinks.push({
+        line: line,
+        n1: d1 < 200 ? n1 : null, // 200px threshold secures even long rect edges
+        n2: d2 < 200 ? n2 : null,
+        ox1: x1, oy1: y1,
+        ox2: x2, oy2: y2
+      });
+    });
+  });
+}
+
+// ── Drag & Drop Handlers ──
+function getMousePt(e, svg) {
+  const pt = svg.createSVGPoint();
+  if (e.touches && e.touches.length > 0) {
+    pt.x = e.touches[0].clientX;
+    pt.y = e.touches[0].clientY;
+  } else {
+    pt.x = e.clientX;
+    pt.y = e.clientY;
+  }
+  // Convert screen coordinates to precise inner SVG coordinates
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+function startDrag(e, node) {
+  if (e.type === 'touchstart') e.preventDefault();
+  draggedNode = node;
+  node.isDragging = true;
+  node.vx = 0; node.vy = 0;
+  node.g.classList.add('dragging');
+  
+  // Bring to front 
+  node.g.parentNode.appendChild(node.g);
+
+  dragStartPt = getMousePt(e, node.svg);
+  nodeStartPos = { x: node.x, y: node.y };
+  
+  if (!physicsRAF) physicsLoop(); // wake up physics engine
+}
+
+window.addEventListener('mousemove', (e) => {
+  if (!draggedNode) return;
+  const pt = getMousePt(e, draggedNode.svg);
+  draggedNode.x = nodeStartPos.x + (pt.x - dragStartPt.x);
+  draggedNode.y = nodeStartPos.y + (pt.y - dragStartPt.y);
+});
+
+window.addEventListener('touchmove', (e) => {
+  if (!draggedNode) return;
+  e.preventDefault(); // Stop window scrolling during bubble drag
+  const pt = getMousePt(e, draggedNode.svg);
+  draggedNode.x = nodeStartPos.x + (pt.x - dragStartPt.x);
+  draggedNode.y = nodeStartPos.y + (pt.y - dragStartPt.y);
+}, {passive: false});
+
+window.addEventListener('mouseup', endDrag);
+window.addEventListener('touchend', endDrag);
+
+function endDrag() {
+  if (draggedNode) {
+    draggedNode.isDragging = false;
+    draggedNode.g.classList.remove('dragging');
+    draggedNode = null;
+  }
+}
+
+// ── Spring Physics Animation Loop ──
+function physicsLoop() {
+  const SPRING = 0.15;
+  const FRICTION = 0.72;
+  let anyMoved = false;
+
+  mmNodes.forEach(n => {
+    if (!n.isDragging) {
+      if (Math.abs(n.x) > 0.1 || Math.abs(n.y) > 0.1 || Math.abs(n.vx) > 0.01 || Math.abs(n.vy) > 0.01) {
+        // Apply spring pull towards origin (0,0 offset)
+        n.vx += (-n.x * SPRING);
+        n.vy += (-n.y * SPRING);
+        n.vx *= FRICTION;
+        n.vy *= FRICTION;
+        n.x += n.vx;
+        n.y += n.vy;
+        anyMoved = true;
+      } else {
+        // Snapped fully back
+        n.x = 0; n.y = 0; n.vx = 0; n.vy = 0;
+      }
+    } else {
+      anyMoved = true; // Actively dragging keeps engine awake
+    }
+
+    // Apply offset transform to the group
+    if (n.x !== 0 || n.y !== 0) {
+      n.g.setAttribute('transform', `translate(${n.x}, ${n.y})`);
+    } else {
+      n.g.removeAttribute('transform');
+    }
+  });
+
+  // Redraw connected lines instantly
+  if (anyMoved) {
+    mmLinks.forEach(link => {
+      const dx1 = link.n1 ? link.n1.x : 0;
+      const dy1 = link.n1 ? link.n1.y : 0;
+      const dx2 = link.n2 ? link.n2.x : 0;
+      const dy2 = link.n2 ? link.n2.y : 0;
+
+      link.line.setAttribute('x1', link.ox1 + dx1);
+      link.line.setAttribute('y1', link.oy1 + dy1);
+      link.line.setAttribute('x2', link.ox2 + dx2);
+      link.line.setAttribute('y2', link.oy2 + dy2);
+    });
+    physicsRAF = requestAnimationFrame(physicsLoop);
+  } else {
+    // Sleep engine when all elements are resting at origin to save CPU/Battery
+    physicsRAF = null; 
+  }
+}
+
+// Start physics processing once DOM loads
+window.addEventListener('DOMContentLoaded', initMindmapPhysics);
 </script>
 </body>
 </html>
