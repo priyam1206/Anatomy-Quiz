@@ -38,27 +38,35 @@ button:focus-visible,input:focus-visible,[role="button"]:focus-visible{outline:3
   border:1px solid var(--border);background:var(--surface);border-radius:12px;padding:9px 12px;cursor:pointer
 }
 .back-btn{display:none}
-.hero{padding:52px 0 28px;display:grid;grid-template-columns:1.45fr .55fr;gap:20px;align-items:end}
+.hero{padding:46px 0 24px;display:grid;grid-template-columns:1.65fr .55fr;gap:22px;align-items:end}
 .eyebrow{font:500 11px/1 "DM Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:12px}
 .hero h1{font-family:"Fraunces",serif;font-size:clamp(38px,6vw,68px);line-height:.98;letter-spacing:-.04em;margin:0 0 14px}
 .hero p{margin:0;color:var(--muted);max-width:640px;font-size:16px}
 .focus-card{
-  background:linear-gradient(145deg,#315c4b,#24463a);color:white;border-radius:var(--r2);
-  padding:20px;box-shadow:var(--shadow);min-height:160px;display:flex;flex-direction:column;justify-content:space-between
+  background:var(--surface);color:var(--text);border:1px solid #b8cbbf;border-radius:var(--r);
+  padding:18px;box-shadow:0 10px 30px rgba(55,45,35,.05);min-height:148px;display:flex;flex-direction:column;justify-content:space-between;
+  cursor:pointer;transition:.18s ease
 }
-.focus-card small{font:500 10px "DM Mono";letter-spacing:.12em;text-transform:uppercase;color:#c7ddd2}
-.focus-card strong{font-size:20px;line-height:1.2}
-.focus-card span{font-size:12px;color:#c7ddd2}
+.focus-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.focus-card small{font:500 10px "DM Mono";letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
+.focus-card strong{font-size:18px;line-height:1.25}
+.focus-card span{font-size:12px;color:var(--muted)}
+.focus-cta{display:inline-flex;align-items:center;gap:6px;color:var(--green)!important;font-weight:700!important;margin-top:10px}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
 .search{flex:1;min-width:230px;position:relative}
 .search input{width:100%;padding:13px 16px 13px 42px;border:1px solid var(--border);border-radius:14px;background:var(--surface);outline:none}
 .search input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(49,92,75,.1)}
 .search:before{content:"⌕";position:absolute;left:15px;top:10px;color:var(--muted);font-size:21px}
 .chips{display:flex;gap:8px;overflow:auto;padding-bottom:1px}
-.chip{white-space:nowrap;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:9px 13px;cursor:pointer;color:var(--muted);font-size:13px}
+.chip{white-space:nowrap;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:10px 15px;min-height:42px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);font-size:13px}
 .chip.active{background:var(--text);border-color:var(--text);color:white}
+.home-progress{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin:4px 0 22px}
+.home-progress strong{font-size:14px}
+.home-progress small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.home-progress .bar{margin:0;height:8px}
+.home-progress-value{font:600 12px "DM Mono";color:var(--green);white-space:nowrap}
 .section-head{display:flex;justify-content:space-between;align-items:end;margin:26px 0 12px}
-.section-head h2{margin:0;font-size:18px}
+.section-head h2{margin:0;font-size:24px;letter-spacing:-.02em}
 .section-head span{color:var(--muted);font-size:12px;font-family:"DM Mono"}
 .topic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .topic{
@@ -74,7 +82,8 @@ button:focus-visible,input:focus-visible,[role="button"]:focus-visible{outline:3
 .pill{font:500 9px "DM Mono";text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--border);border-radius:999px;padding:5px 7px;color:var(--muted)}
 .topic h3{margin:24px 0 6px;font-size:17px;line-height:1.2}
 .topic p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
-.topic-meta{margin-top:auto;padding-top:14px;display:flex;gap:12px;color:var(--muted);font:400 11px "DM Mono"}
+.topic-meta{margin-top:auto;padding-top:14px;display:flex;gap:7px;flex-wrap:wrap;color:var(--muted);font:500 11px "DM Mono"}
+.topic-meta span{background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:5px 8px}
 .topic.current{border-color:#b4cabe;background:linear-gradient(180deg,var(--surface),var(--green2))}
 .module{display:none;padding-top:24px}
 .module.active{display:block}
@@ -102,22 +111,28 @@ button:focus-visible,input:focus-visible,[role="button"]:focus-visible{outline:3
 .face.back .fc-text{font-size:clamp(17px,2.4vw,23px);font-weight:500;color:var(--green-ink)}
 .tap{margin-top:18px;color:var(--muted);font-size:12px}
 .fc-actions{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px;margin-top:12px}
-.action{border:1px solid var(--border);background:var(--surface);border-radius:13px;padding:12px;cursor:pointer}
-.action.know{background:var(--green);border-color:var(--green);color:white}
-.action.review{background:var(--rose2);border-color:#e4c8cf;color:var(--rose)}
+.action{border:1px solid var(--border);background:var(--surface);border-radius:13px;padding:12px;min-height:46px;cursor:pointer;font-weight:600}
+.action.know{background:var(--green2);border-color:#9dbbaa;color:var(--green-ink)}
+.action.review{background:var(--rose2);border-color:#e4c8cf;color:var(--rose-ink)}
+.action.subtle{font-weight:500;color:var(--muted)}
 .quiz-wrap{max-width:780px;margin:0 auto}
 .quiz-card{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
-.quiz-top{display:flex;justify-content:space-between;color:var(--muted);font:400 11px "DM Mono";margin-bottom:18px}
+.quiz-top{display:flex;justify-content:space-between;color:var(--muted);font:500 12px "DM Mono";margin-bottom:9px}
+.quiz-progress{height:6px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-bottom:20px}
+.quiz-progress i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .25s}
 .quiz-q{font-size:21px;font-weight:600;line-height:1.35;margin-bottom:18px}
 .options{display:grid;gap:9px}
-.option{padding:13px 14px;text-align:left;border:1px solid var(--border);border-radius:13px;background:#fff;cursor:pointer;transition:.15s}
+.option{padding:13px 14px;text-align:left;border:1px solid var(--border);border-radius:13px;background:var(--surface);cursor:pointer;transition:.15s;display:flex;align-items:center;gap:11px}
+.opt-letter{width:29px;height:29px;border-radius:9px;border:1px solid var(--border);background:var(--surface2);display:grid;place-items:center;font:600 11px "DM Mono";flex:0 0 auto}
+.option.correct .opt-letter{background:var(--green);border-color:var(--green);color:white}
+.option.wrong .opt-letter{background:var(--rose);border-color:var(--rose);color:white}
 .option:hover{border-color:#aaa196}
 .option.correct{background:var(--green2);border-color:#8bb09d;color:var(--green-ink)}
 .option.wrong{background:var(--rose2);border-color:#dcaab5;color:var(--rose-ink)}
 .quiz-note{display:none;margin-top:14px;border-radius:13px;padding:12px 14px;background:var(--surface2);font-size:13px;line-height:1.5}
 .quiz-note.show{display:block}
-.quiz-nav{display:flex;gap:9px;margin-top:14px}
-.quiz-nav button{flex:1}
+.quiz-nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:14px}
+.quiz-nav button{width:100%}
 .notes-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
 .note-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px}
 .note-card h3{margin:0 0 12px;font-size:16px}
@@ -130,10 +145,15 @@ button:focus-visible,input:focus-visible,[role="button"]:focus-visible{outline:3
 .footer{text-align:center;color:var(--muted);font-size:11px;font-family:"DM Mono";padding-top:50px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(90px);opacity:0;background:#211f1b;color:white;border-radius:999px;padding:10px 15px;font-size:12px;transition:.25s;z-index:50}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-body.dark{--bg:#171816;--surface:#20211e;--surface2:#292a26;--text:#f1eee8;--muted:#aaa49a;--border:#383934;--green2:#24372f;--green-ink:#b8d9c8;--rose2:#3a292e;--rose-ink:#e5b4bf;--blue2:#282e3d;--gold2:#393126;--shadow:0 18px 50px rgba(0,0,0,.2)}
+body.dark{--bg:#171816;--surface:#20211e;--surface2:#2b2c28;--text:#f4f1eb;--muted:#c1bbb2;--border:#4b4c46;--green2:#263b32;--green-ink:#c7e3d4;--rose2:#402d33;--rose-ink:#efc0ca;--blue2:#2d3343;--gold2:#40362a;--shadow:0 18px 50px rgba(0,0,0,.28)}
+body.dark .tab.active{border-bottom-color:#9fc7b5}
+body.dark .option{border-color:#53554e}
+body.dark .fc-label,body.dark .quiz-top,body.dark .progress-box small{color:#d0cbc2}
+body.dark .flow span{border-color:#53554e}
+body.dark .focus-card{border-color:#52665c}
 body.dark .topbar{background:rgba(23,24,22,.9)} body.dark .option{background:var(--surface)}
 @media(max-width:850px){.topic-grid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.focus-card{min-height:130px}.notes-grid{grid-template-columns:1fr}.module-hero{grid-template-columns:1fr}.progress-box{min-width:0}}
-@media(max-width:560px){.shell{padding-left:14px;padding-right:14px}.topbar-inner{padding:0 14px}.hero{padding-top:34px}.topic-grid{grid-template-columns:1fr}.topic{min-height:160px}.flashcard{height:360px}.fc-actions{grid-template-columns:1fr 1fr}.module-hero h1{font-size:30px}.brand small{display:none}}
+@media(max-width:560px){.shell{padding-left:14px;padding-right:14px}.topbar-inner{padding:0 14px}.hero{padding-top:30px;gap:15px}.hero h1{font-size:42px}.hero p{font-size:14px}.focus-card{min-height:124px}.toolbar{margin-top:4px}.search{min-width:100%}.search input{padding-top:11px;padding-bottom:11px}.chips{width:100%}.topic-grid{grid-template-columns:1fr}.topic{min-height:160px}.flashcard{height:350px}.fc-actions{grid-template-columns:1fr 1fr}.quiz-nav{grid-template-columns:1fr 1fr}.quiz-nav .next-wide{grid-column:1/-1}.module-hero h1{font-size:30px}.brand small{display:none}.home-progress{grid-template-columns:1fr auto}.home-progress .bar{grid-column:1/-1;grid-row:2}.section-head h2{font-size:21px}}
 </style>
 </head>
 <body>
@@ -158,11 +178,12 @@ body.dark .topbar{background:rgba(23,24,22,.9)} body.dark .option{background:var
       <small>Current focus</small>
       <strong>Development of Periodontal Ligament</strong>
       <span>HERS → dental follicle → principal fibers</span>
+      <span class="focus-cta">Continue PDL →</span>
     </div>
   </div>
 
   <div class="toolbar">
-    <div class="search"><input id="searchInput" placeholder="Search topics…" oninput="renderTopics()"></div>
+    <div class="search"><input id="searchInput" aria-label="Search study topics" placeholder="Search PDL, face, brachial plexus…" oninput="renderTopics()"></div>
     <div class="chips">
       <button class="chip active" data-filter="All" onclick="setFilter('All',this)">All</button>
       <button class="chip" data-filter="Embryology" onclick="setFilter('Embryology',this)">Embryology</button>
@@ -171,6 +192,11 @@ body.dark .topbar{background:rgba(23,24,22,.9)} body.dark .option{background:var
     </div>
   </div>
 
+  <div class="home-progress" aria-label="Overall flashcard progress">
+    <div><strong>Overall revision</strong><small id="overallSub">Progress across all flashcards</small></div>
+    <div class="bar"><i id="overallBar"></i></div>
+    <div class="home-progress-value" id="overallValue">0%</div>
+  </div>
   <div class="section-head"><h2>Study modules</h2><span id="topicCount"></span></div>
   <div class="topic-grid" id="topicGrid"></div>
 </section>
@@ -216,12 +242,14 @@ body.dark .topbar{background:rgba(23,24,22,.9)} body.dark .option{background:var
     <div class="quiz-wrap">
       <div class="quiz-card">
         <div class="quiz-top"><span id="quizProg"></span><span id="quizScore"></span></div>
+        <div class="quiz-progress"><i id="quizBar" style="width:0%"></i></div>
         <div class="quiz-q" id="quizQ"></div>
         <div class="options" id="quizOptions"></div>
         <div class="quiz-note" id="quizNote"></div>
         <div class="quiz-nav">
-          <button class="action" onclick="restartQuiz()">Restart</button>
-          <button class="action know" id="quizNext" onclick="nextQuiz()" disabled>Next →</button>
+          <button class="action subtle" onclick="restartQuiz()">Restart quiz</button>
+          <button class="action subtle" id="quizSkip" onclick="skipQuiz()">Skip</button>
+          <button class="action know next-wide" id="quizNext" onclick="nextQuiz()" disabled>Next question →</button>
         </div>
       </div>
     </div>
@@ -522,6 +550,7 @@ function topicState(id){if(!state[id]) state[id]={known:{},best:0};return state[
 function renderTopics(){
  const q=(document.getElementById("searchInput").value||"").toLowerCase().trim();
  const grid=document.getElementById("topicGrid"); grid.innerHTML="";
+ updateOverallProgress();
  const list=TOPICS.filter(t=>(filter==="All"||t.category===filter)&&(!q||(t.title+" "+t.desc+" "+t.category).toLowerCase().includes(q)));
  document.getElementById("topicCount").textContent=list.length+" topics";
  if(!list.length){grid.innerHTML='<div class="empty">No matching study module.</div>';return}
@@ -531,10 +560,18 @@ function renderTopics(){
   el.onclick=()=>openTopic(t.id);
   const cls=t.category==="Anatomy"?"cat-anatomy":t.category==="Embryology"?"cat-embryology":"cat-histology";
   el.setAttribute("role","button");el.setAttribute("tabindex","0");el.onkeydown=(e)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openTopic(t.id)}};
-  el.innerHTML='<div class="topic-top"><div class="topic-icon '+cls+'">'+t.icon+'</div><div class="topic-tags"><div class="pill">'+t.category+'</div>'+(t.current?'<div class="pill current-pill">Current</div>':'')+'</div></div>'+
-   '<h3>'+t.title+'</h3><p>'+t.desc+'</p><div class="topic-meta"><span>'+t.cards.length+' cards</span><span>'+t.quiz.length+' quiz</span><span>'+known+' known</span></div>';
+  const status=known===0?'Not started':known+'/'+t.cards.length+' known';
+  el.innerHTML='<div class="topic-top"><div class="topic-icon '+cls+'">'+t.icon+'</div><div class="topic-tags"><div class="pill">'+t.category+'</div>'+(t.current?'<div class="pill current-pill">Studying now</div>':'')+'</div></div>'+
+   '<h3>'+t.title+'</h3><p>'+t.desc+'</p><div class="topic-meta"><span>'+t.cards.length+' cards</span><span>'+t.quiz.length+' questions</span><span>'+status+'</span></div>';
   grid.appendChild(el);
  });
+}
+function updateOverallProgress(){
+ const total=TOPICS.reduce((n,t)=>n+t.cards.length,0);
+ const known=TOPICS.reduce((n,t)=>n+Object.values(topicState(t.id).known).filter(Boolean).length,0);
+ const pct=total?Math.round(known/total*100):0;
+ const bar=document.getElementById("overallBar"),val=document.getElementById("overallValue"),sub=document.getElementById("overallSub");
+ if(bar)bar.style.width=pct+"%"; if(val)val.textContent=pct+"%"; if(sub)sub.textContent=known+" of "+total+" flashcards known";
 }
 function setFilter(v,btn){filter=v;document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));btn.classList.add("active");renderTopics()}
 function openTopic(id){
@@ -553,7 +590,7 @@ function renderCard(){
 function flipCard(){document.getElementById("flashInner").classList.toggle("flipped")}
 function nextCard(){fcIndex=(fcIndex+1)%active.cards.length;renderCard()}
 function prevCard(){fcIndex=(fcIndex-1+active.cards.length)%active.cards.length;renderCard()}
-function rateCard(ok){topicState(active.id).known[fcIndex]=ok;save();updateProgress();toast(ok?"Marked as known":"Added to review");nextCard()}
+function rateCard(ok){topicState(active.id).known[fcIndex]=ok;save();updateProgress();updateOverallProgress();toast(ok?"Marked as known":"Added to review");nextCard()}
 function updateProgress(){
  const s=topicState(active.id),known=Object.values(s.known).filter(Boolean).length,total=active.cards.length;
  document.getElementById("knownText").textContent=known+" known";document.getElementById("cardTotal").textContent=total+" cards";
@@ -566,6 +603,7 @@ function renderQuiz(){
   topicState(active.id).best=Math.max(topicState(active.id).best||0,quizScore);save();
   document.getElementById("quizProg").textContent="Complete";
   document.getElementById("quizScore").textContent=quizScore+" / "+active.quiz.length;
+  document.getElementById("quizBar").style.width="100%";
   document.getElementById("quizQ").textContent=quizScore>=Math.ceil(active.quiz.length*.8)?"Strong recall. Review missed cards once more.":"Review the quick notes, then retry.";
   document.getElementById("quizOptions").innerHTML="";
   const n=document.getElementById("quizNote");n.className="quiz-note show";n.textContent="Best score: "+topicState(active.id).best+" / "+active.quiz.length;
@@ -574,21 +612,26 @@ function renderQuiz(){
  const q=active.quiz[quizIndex];quizAnswered=false;
  document.getElementById("quizProg").textContent="Question "+(quizIndex+1)+" of "+active.quiz.length;
  document.getElementById("quizScore").textContent="Score "+quizScore;
+ document.getElementById("quizBar").style.width=Math.round((quizIndex/active.quiz.length)*100)+"%";
  document.getElementById("quizQ").textContent=q[0];
  const box=document.getElementById("quizOptions");box.innerHTML="";
  const order=q[1].map((o,i)=>({text:o,original:i}));
  for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}
- order.forEach(item=>{const b=document.createElement("button");b.className="option";b.textContent=item.text;b.dataset.original=item.original;b.onclick=()=>answerQuiz(item.original,b);box.appendChild(b)});
+ order.forEach((item,pos)=>{const b=document.createElement("button");b.className="option";b.dataset.original=item.original;b.onclick=()=>answerQuiz(item.original,b);b.innerHTML='<span class="opt-letter">'+String.fromCharCode(65+pos)+'</span><span>'+item.text+'</span>';box.appendChild(b)});
  const note=document.getElementById("quizNote");note.className="quiz-note";note.textContent="";
  document.getElementById("quizNext").disabled=true;
+ const skip=document.getElementById("quizSkip"); if(skip)skip.disabled=false;
 }
 function answerQuiz(i,btn){
  if(quizAnswered)return;quizAnswered=true;const q=active.quiz[quizIndex];const buttons=[...document.querySelectorAll(".option")];
  buttons.forEach(b=>{b.disabled=true;if(Number(b.dataset.original)===q[2])b.classList.add("correct")});
  if(i===q[2])quizScore++;else btn.classList.add("wrong");
- const note=document.getElementById("quizNote");note.className="quiz-note show";note.textContent=q[3];
+ const note=document.getElementById("quizNote");note.className="quiz-note show";
+ note.textContent=(i===q[2]?"✓ Correct — ":"✕ Not quite — ")+q[3];
  document.getElementById("quizScore").textContent="Score "+quizScore;document.getElementById("quizNext").disabled=false;
+ const skip=document.getElementById("quizSkip"); if(skip)skip.disabled=true;
 }
+function skipQuiz(){if(quizAnswered)return;quizIndex++;renderQuiz()}
 function nextQuiz(){quizIndex++;renderQuiz()}
 function renderNotes(){
  const ul=document.getElementById("notesList");ul.innerHTML=active.notes.map(x=>"<li>"+x+"</li>").join("");
